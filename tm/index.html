@@ -3,153 +3,159 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Watch a Tsetlin Machine learn · Anwar Debes</title>
-<meta name="description" content="A real Tsetlin Machine learning noisy XOR live in your browser, in 3D. Watch 96 tiny automata decide which inputs matter and read the logical clauses they learn.">
+<title>Watch a Tsetlin Machine learn, Anwar Debes</title>
+<meta name="description" content="A real Tsetlin Machine learning noisy XOR in your browser, in 3D. Watch the automata decide which inputs matter, then read the logical clauses they learn.">
 <link rel="canonical" href="https://anwardebes.github.io/tm/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Watch a Tsetlin Machine learn, live in 3D">
-<meta property="og:description" content="96 tiny automata vote on which inputs matter. Spoiler: they discover XOR, and they can tell you why.">
+<meta property="og:site_name" content="Anwar Debes">
+<meta property="og:title" content="Watch a Tsetlin Machine learn">
+<meta property="og:description" content="Tiny automata vote on which inputs matter. They find XOR on their own, and they can tell you why.">
 <meta property="og:url" content="https://anwardebes.github.io/tm/">
 <meta property="og:image" content="https://anwardebes.github.io/tm/og.png">
-<meta property="og:image:width" content="1280">
-<meta property="og:image:height" content="640">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://anwardebes.github.io/tm/og.png">
-<meta name="theme-color" content="#060a14">
+<meta name="theme-color" content="#E3E7E5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121816" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<link rel="preload" href="../assets/fonts/schibsted-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/css/site.css">
+<script>
+  try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+</script>
 <style>
-:root{--bg:#060a14;--line:#1e293b;--line2:#334155;--text:#e2e8f0;--muted:#94a3b8;--dim:#64748b;--cyan:#67e8f9;--violet:#a78bfa;--pink:#f0abfc;--teal:#5eead4}
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--text);font:400 15px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
-a{color:var(--cyan);text-decoration:none}
-a:hover{text-decoration:underline}
-.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
-.wrap{display:grid;grid-template-columns:minmax(0,1fr) 400px;height:100vh;height:100svh}
-.stage{position:relative;overflow:hidden}
-#gl{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab}
-#labels{position:absolute;inset:0;pointer-events:none}
-.rl{font:600 12px "JetBrains Mono",monospace;padding:1px 6px;border-radius:6px;background:rgba(6,10,20,.6);border:1px solid rgba(148,163,184,.2)}
-.rl.p{color:var(--teal)}.rl.n{color:var(--pink)}
-.cl{font:600 12px "JetBrains Mono",monospace;color:var(--muted)}
-.cl.neg{color:#f9a8d4}
-.head{position:absolute;left:clamp(14px,3vw,30px);top:18px;z-index:3;max-width:560px;pointer-events:none}
-.head a{pointer-events:auto;color:var(--muted);font-size:13px}
-h1{margin:6px 0 4px;font:700 clamp(26px,3.4vw,40px)/1.05 "Space Grotesk",Inter,sans-serif;letter-spacing:-.8px;
- background:linear-gradient(90deg,#a5f3fc,#a78bfa 55%,#f0abfc);-webkit-background-clip:text;background-clip:text;color:transparent}
-.head p{margin:0;color:#cbd5e1;font-size:14.5px}
-.legend{position:absolute;left:clamp(14px,3vw,30px);bottom:16px;z-index:3;display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted)}
-.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
-aside{border-left:1px solid var(--line);background:linear-gradient(180deg,#0a1122,#070c18);overflow:auto;padding:18px 18px 28px}
-.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.btn{padding:9px 14px;border-radius:10px;border:1px solid var(--line2);background:rgba(15,23,42,.8);color:var(--text);font:600 13px Inter,sans-serif;cursor:pointer}
-.btn:hover{border-color:var(--violet)}
-.btn.primary{background:linear-gradient(90deg,#22d3ee,#8b5cf6);border:0;color:#050816;min-width:96px}
-label{display:block;font-size:12.5px;color:var(--muted);margin-top:12px}
-input[type=range]{width:100%;accent-color:#8b5cf6}
-select{margin-top:4px;width:100%;padding:8px;border-radius:9px;background:#0b1222;color:var(--text);border:1px solid var(--line2);font:500 13.5px Inter,sans-serif}
-.card{margin-top:16px;padding:14px 14px 12px;border-radius:14px;border:1px solid var(--line);background:rgba(11,18,34,.7)}
-.card h3{margin:0 0 8px;font:600 11px Inter,sans-serif;letter-spacing:1.6px;text-transform:uppercase;color:var(--violet)}
-.stat{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
-.stat b{color:var(--text);font:600 22px "Space Grotesk",Inter,sans-serif}
-#chart{width:100%;height:90px;display:block;margin-top:6px}
-#clauses div{display:flex;gap:8px;align-items:baseline;padding:4px 0;border-top:1px dashed rgba(51,65,85,.6);font-size:14px}
-#clauses div:first-child{border-top:0}
-#clauses span.tag{flex:0 0 52px;font:600 12px "JetBrains Mono",monospace}
-#clauses .p{color:var(--teal)}#clauses .n{color:var(--pink)}
-#clauses code{font:500 14px "JetBrains Mono",monospace;color:var(--text);transition:color .3s}
-#clauses code.changed{color:#fde68a}
-.verdict{margin-top:10px;padding:10px 12px;border-radius:12px;background:rgba(94,234,212,.08);border:1px solid rgba(94,234,212,.35);font-size:13.5px;display:none}
-.bits{font:600 18px "JetBrains Mono",monospace;letter-spacing:3px}
-.bits .noise{color:var(--dim)}
-.explain{font-size:13.5px;color:#cbd5e1}
-.explain .fire{color:var(--text)}
-.explain code{font-family:"JetBrains Mono",monospace}
-.foot{margin-top:18px;font-size:12px;color:var(--dim)}
-.prog{height:4px;border-radius:4px;background:#1e293b;overflow:hidden;margin-top:10px}
-.prog i{display:block;height:100%;width:0;background:linear-gradient(90deg,#22d3ee,#8b5cf6)}
-@media (max-width:900px){
- .wrap{grid-template-columns:1fr;height:auto}
- .stage{height:62vh;min-height:420px}
- aside{border-left:0;border-top:1px solid var(--line)}
- .legend{display:none}
+.tmwrap { display: grid; grid-template-columns: minmax(0, 1fr) 420px; height: 100vh; height: 100svh; }
+.stage { position: relative; overflow: hidden; }
+#gl { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; }
+#labels { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+.rl { font-size: 13px; font-weight: 600; color: var(--ink); }
+.cl { font-family: var(--math); font-style: italic; font-size: 16px; color: var(--graphite); }
+.v { font-family: var(--math); font-style: italic; }
+.v sub { font-style: normal; font-size: 0.72em; }
+.op { font-family: var(--math); font-style: normal; padding: 0 0.22em; color: var(--graphite); }
+.stage::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 230px; z-index: 2; pointer-events: none; background: linear-gradient(to bottom, var(--mist) 55%, color-mix(in srgb, var(--mist) 0%, transparent)); }
+.head { position: absolute; left: var(--pad); top: 18px; z-index: 3; max-width: 560px; pointer-events: none; }
+.head a { pointer-events: auto; font-size: 16px; font-weight: 650; text-decoration: none; }
+.head h1 { font-size: clamp(30px, 3.6vw, 48px); font-weight: 680; letter-spacing: -0.035em; margin: 10px 0 8px; }
+.head p { margin: 0; color: var(--graphite); font-size: 16px; max-width: 30em; }
+.legend { position: absolute; left: var(--pad); bottom: 18px; z-index: 3; display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; color: var(--graphite); }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 7px; vertical-align: -1px; }
+.side { border-left: 1px solid var(--rule); background: var(--paper); overflow: auto; padding: 22px 24px 30px; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.btn { font: inherit; font-size: 15px; padding: 9px 16px; border-radius: 999px; cursor: pointer; border: 1px solid var(--rule-strong); background: transparent; color: var(--ink); }
+.btn:hover { border-color: var(--ink); }
+.btn.primary { background: var(--ink); color: var(--mist); border-color: var(--ink); min-width: 92px; }
+.side label { display: block; font-size: 15px; color: var(--graphite); margin-top: 16px; }
+.side input[type=range] { width: 100%; accent-color: var(--glass); margin-top: 6px; }
+.side select { margin-top: 6px; width: 100%; padding: 9px 10px; border-radius: 10px; background: var(--mist); color: var(--ink); border: 1px solid var(--rule-strong); font: inherit; font-size: 15px; }
+.part { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--rule); }
+.part h2 { font-size: 20px; font-weight: 650; letter-spacing: -0.01em; margin: 0 0 12px; }
+.stat { display: flex; justify-content: space-between; align-items: baseline; font-size: 15px; color: var(--graphite); }
+.stat b { color: var(--ink); font-size: 26px; font-weight: 650; }
+#chart { width: 100%; height: 90px; display: block; margin-top: 8px; }
+#clauses div { display: flex; gap: 10px; align-items: baseline; padding: 6px 0; border-top: 1px solid var(--rule); font-size: 17px; }
+#clauses div:first-child { border-top: 0; }
+#clauses .tag { flex: 0 0 56px; font-size: 15px; color: var(--graphite); }
+#clauses .f { transition: color 0.3s; }
+#clauses .f.changed { color: var(--glass); }
+.found { margin-top: 12px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--glass) 12%, transparent); font-size: 16px; display: none; }
+.bits { font-size: 22px; font-weight: 600; letter-spacing: 0.18em; font-variant-numeric: tabular-nums; }
+.bits .noise { color: var(--graphite); font-weight: 400; }
+.bits small { font-size: 14px; letter-spacing: 0; color: var(--graphite); font-weight: 400; margin-left: 8px; }
+.explain { font-size: 16px; line-height: 1.55; }
+.foot { margin-top: 26px; font-size: 14px; color: var(--graphite); }
+.prog { height: 4px; border-radius: 4px; background: var(--rule); overflow: hidden; margin-top: 14px; }
+.prog i { display: block; height: 100%; width: 0; background: var(--ink); }
+@media (max-width: 900px) {
+  .tmwrap { grid-template-columns: 1fr; height: auto; }
+  .stage { height: 62vh; min-height: 420px; }
+  .side { border-left: 0; border-top: 1px solid var(--rule); }
+  .legend { display: none; }
 }
 </style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
 </head>
 <body>
-<div class="wrap">
+<div class="tmwrap">
   <section class="stage">
     <canvas id="gl" aria-label="3D view of the Tsetlin automata states"></canvas>
     <div id="labels"></div>
     <div class="head">
-      <a href="../">← anwardebes.github.io</a>
+      <a href="../">Anwar Debes</a>
       <h1>Watch a Tsetlin Machine learn</h1>
-      <p>96 tiny automata vote on which inputs matter. Spoiler: they discover XOR, and they can tell you why.</p>
+      <p>Tiny automata vote on which inputs matter. Nobody tells them the rule is XOR. They find it, and they can tell you why.</p>
     </div>
-    <div class="legend mono">
-      <span><i style="background:#67e8f9"></i>included xₖ</span>
-      <span><i style="background:#f0abfc"></i>included ¬xₖ</span>
-      <span><i style="background:#334155"></i>excluded</span>
-      <span>glass plane = include threshold</span>
+    <div class="legend">
+      <span><i style="background:var(--lit-pos)"></i>Included input</span>
+      <span><i style="background:var(--lit-neg)"></i>Included negated input</span>
+      <span><i style="background:var(--lit-off)"></i>Excluded</span>
+      <span>The glass plane is the include threshold</span>
     </div>
   </section>
-  <aside>
+  <aside class="side">
     <div class="row">
-      <button class="btn primary" id="play">Play</button>
-      <button class="btn" id="step">One epoch</button>
-      <button class="btn" id="reset">Reset</button>
+      <button class="btn primary" id="play" type="button">Play</button>
+      <button class="btn" id="step" type="button">One epoch</button>
+      <button class="btn" id="reset" type="button">Reset</button>
+      <button class="btn" id="theme" type="button">Dark</button>
     </div>
     <div class="prog"><i id="prog"></i></div>
-    <label>Speed <span id="speedv" class="mono"></span><input type="range" id="speed" min="1" max="120" value="24"></label>
-    <label>Label noise in the training data <span id="noisev" class="mono"></span><input type="range" id="noise" min="0" max="30" value="10"></label>
-    <label>Clauses<select id="nclauses"><option value="4">4 (2 for, 2 against)</option><option value="8" selected>8 (4 for, 4 against)</option><option value="12">12 (6 for, 6 against)</option></select></label>
+    <label>Speed, <span id="speedv"></span><input type="range" id="speed" min="1" max="120" value="24"></label>
+    <label>Label noise in the training data, <span id="noisev"></span><input type="range" id="noise" min="0" max="30" value="10"></label>
+    <label>Clauses<select id="nclauses"><option value="4">4: two for, two against</option><option value="8" selected>8: four for, four against</option><option value="12">12: six for, six against</option></select></label>
 
-    <div class="card">
-      <h3>Progress</h3>
-      <div class="stat"><span>epoch</span><b id="epoch">0</b></div>
-      <div class="stat"><span>test accuracy (clean labels)</span><b id="acc">50.0%</b></div>
+    <div class="part">
+      <h2>Progress</h2>
+      <div class="stat"><span>Epoch</span><b id="epoch">0</b></div>
+      <div class="stat"><span>Test accuracy on clean labels</span><b id="acc">50.0%</b></div>
       <canvas id="chart"></canvas>
     </div>
 
-    <div class="card">
-      <h3>What it learned, in plain logic</h3>
+    <div class="part">
+      <h2>What it learned, in plain logic</h2>
       <div id="clauses"></div>
-      <div class="verdict" id="verdict">It found it: <b>XOR = (x1 ∧ ¬x2) ∨ (¬x1 ∧ x2)</b>, and it ignores x3 to x6 completely. Nobody told it which inputs mattered.</div>
+      <div class="found" id="found">It found XOR on its own: <span class="v">x<sub>1</sub></span><span class="op">⊕</span><span class="v">x<sub>2</sub></span> as two clauses for and two against, and it ignores <span class="v">x<sub>3</sub></span> to <span class="v">x<sub>6</sub></span> completely.</div>
     </div>
 
-    <div class="card">
-      <h3>Explain one prediction</h3>
+    <div class="part">
+      <h2>Explain one prediction</h2>
       <div class="bits" id="bits"></div>
       <div class="explain" id="explain"></div>
-      <div class="row" style="margin-top:10px"><button class="btn" id="another">Another example</button></div>
+      <div class="row" style="margin-top:12px"><button class="btn" id="another" type="button">Another example</button></div>
     </div>
 
-    <div class="card">
-      <h3>What you are looking at</h3>
-      <p class="explain" style="margin:0">Inputs x1 to x6 are random bits. The label is x1 XOR x2. Inputs x3 to x6 are pure noise, and a share of the training labels is flipped on purpose. Each bar is one Tsetlin automaton deciding whether one input, or its negation, belongs in one clause. Bars above the glass plane are included. Clauses marked + vote for class 1, clauses marked − vote for class 0, and the majority wins.</p>
+    <div class="part">
+      <h2>What you are looking at</h2>
+      <p class="explain" style="margin:0">Inputs <span class="v">x<sub>1</sub></span> to <span class="v">x<sub>6</sub></span> are random bits. The label is <span class="v">x<sub>1</sub></span> XOR <span class="v">x<sub>2</sub></span>, the other four inputs are pure noise, and a share of the training labels is flipped on purpose. Each bar is one Tsetlin automaton deciding whether one input, or its negation, belongs in one clause. Bars above the glass plane are included. Clauses marked + vote for 1, clauses marked − vote for 0, and the majority wins.</p>
     </div>
-    <p class="foot mono">No GPUs were harmed. This is a real Tsetlin Machine running on your CPU in plain JavaScript. Research by <a href="https://github.com/AnwarDebes">@AnwarDebes</a> · <a href="../universe/">Research Universe</a></p>
+    <p class="foot">No GPUs were harmed. This is a real Tsetlin Machine running in plain JavaScript on your CPU. <a href="../">Anwar Debes</a>, <a href="../universe/">research map</a>.</p>
   </aside>
 </div>
 
-<script type="importmap">
-{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
-</script>
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 import { TsetlinMachine, makeXor } from './tm.js';
 
 const $ = (id) => document.getElementById(id);
 const FEATURES = 6, NAMES = ['x1', 'x2', 'x3', 'x4', 'x5', 'x6'], STATES = 100;
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fmt = (t) => t.replace(/¬/g, '<span class="op">¬</span>').replace(/ ∧ /g, '<span class="op">∧</span>').replace(/x(\d)/g, '<span class="v">x<sub>$1</sub></span>');
+
+// ------------------------------------------------------------- theme
+const COL = {
+  light: { bg: '#E3E7E5', pos: '#186A55', neg: '#A26F12', off: '#B9C0BE', plane: '#9AA7A3', grid: '#B9C0BE', ink: '#101614' },
+  dark: { bg: '#121816', pos: '#74C9AE', neg: '#E0B25E', off: '#3A4441', plane: '#9AA7A3', grid: '#2A3330', ink: '#E4EAE7' },
+};
+const darkQ = matchMedia('(prefers-color-scheme: dark)');
+const theme = () => { const t = document.documentElement.getAttribute('data-theme'); return t === 'light' || t === 'dark' ? t : (darkQ.matches ? 'dark' : 'light'); };
+let C = COL[theme()];
 
 // ------------------------------------------------------------- machine and data
 let tm, train, test, cursor = 0, epoch = 0, playing = !reduce, history = [], lastTexts = [];
@@ -175,103 +181,98 @@ function evaluate() {
 const stage = document.querySelector('.stage');
 const canvas = $('gl');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
 const labelRenderer = new CSS2DRenderer({ element: $('labels') });
 const scene = new THREE.Scene();
-scene.background = (() => {
-  const c = document.createElement('canvas'); c.width = c.height = 512; const g = c.getContext('2d');
-  const lin = g.createLinearGradient(0, 0, 512, 512); lin.addColorStop(0, '#05080f'); lin.addColorStop(1, '#0d1430');
-  g.fillStyle = lin; g.fillRect(0, 0, 512, 512);
-  const r = g.createRadialGradient(300, 260, 0, 300, 260, 300); r.addColorStop(0, 'rgba(124,58,237,.22)'); r.addColorStop(1, 'rgba(0,0,0,0)');
-  g.fillStyle = r; g.fillRect(0, 0, 512, 512);
-  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
-})();
 const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 200);
-camera.position.set(6.2, 6.4, 9.4);
+camera.position.set(6.4, 6.0, 10.2);
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true; controls.dampingFactor = 0.07; controls.enablePan = false;
 controls.minDistance = 5; controls.maxDistance = 24; controls.maxPolarAngle = 1.45;
 controls.autoRotate = !reduce; controls.autoRotateSpeed = 0.4;
 canvas.addEventListener('pointerdown', () => { controls.autoRotate = false; });
-scene.add(new THREE.AmbientLight(0x8090ff, 0.6));
-const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(5, 9, 6); scene.add(key);
-
-const composer = new EffectComposer(renderer);
-composer.addPass(new RenderPass(scene, camera));
-const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.42, 0.4, 0.55);
-composer.addPass(bloom);
-composer.addPass(new OutputPass());
+scene.add(new THREE.HemisphereLight(0xffffff, 0x7d8784, 1.5));
+const key = new THREE.DirectionalLight(0xffffff, 1.5); key.position.set(5, 9, 6); scene.add(key);
 
 const DX = 0.52, DZ = 0.86, HMAX = 2.4, TH = HMAX / 2;
 const grid = new THREE.Group(); scene.add(grid);
-const C_POS = new THREE.Color(0x67e8f9), C_NEG = new THREE.Color(0xf0abfc), C_OFF = new THREE.Color(0x3b4a66);
-let bars = null, shown = null, plane = null, labelObjs = [];
+const cPos = new THREE.Color(), cNeg = new THREE.Color(), cOff = new THREE.Color();
+let bars = null, shown = null, plane = null, planeEdge = null, floor = null, labelObjs = [];
 const boxGeo = new THREE.BoxGeometry(0.38, 1, 0.5);
 boxGeo.translate(0, 0.5, 0);
-const barMat = new THREE.MeshStandardMaterial({ roughness: 0.35, metalness: 0.1, emissive: 0xffffff, emissiveIntensity: 0.0 });
-barMat.onBeforeCompile = (sh) => {
-  // drive emission from the instance colour so included bars glow
-  sh.fragmentShader = sh.fragmentShader.replace('#include <emissivemap_fragment>', '#include <emissivemap_fragment>\n totalEmissiveRadiance = vColor.rgb * vGlow * 0.55;');
-  sh.fragmentShader = sh.fragmentShader.replace('void main() {', 'varying float vGlow;\nvoid main() {');
-  sh.vertexShader = sh.vertexShader.replace('void main() {', 'attribute float glow;\nvarying float vGlow;\nvoid main() {\n vGlow = glow;');
+const barMat = new THREE.MeshStandardMaterial({ roughness: 0.55, metalness: 0.05 });
+const planeMat = new THREE.MeshStandardMaterial({ transparent: true, opacity: 0.16, roughness: 0.2, side: THREE.DoubleSide, depthWrite: false });
+const edgeMat = new THREE.LineBasicMaterial({ transparent: true, opacity: 0.7 });
+function applyTheme() {
+  C = COL[theme()];
+  renderer.setClearColor(C.bg, 1);
+  cPos.set(C.pos); cNeg.set(C.neg); cOff.set(C.off);
+  planeMat.color.set(C.plane); edgeMat.color.set(C.ink);
+  document.documentElement.style.setProperty('--lit-pos', C.pos);
+  document.documentElement.style.setProperty('--lit-neg', C.neg);
+  document.documentElement.style.setProperty('--lit-off', C.off);
+  if (floor) { grid.remove(floor); floor = null; }
+  floor = new THREE.GridHelper(14, 28, C.grid, C.grid); floor.position.y = -0.01;
+  floor.material.transparent = true; floor.material.opacity = 0.6; grid.add(floor);
+  $('theme').textContent = theme() === 'dark' ? 'Light' : 'Dark';
+  if (shown) shown.fill(-1); // force colours to refresh
+  drawChart();
+}
+$('theme').onclick = () => {
+  const next = theme() === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  try { localStorage.setItem('theme', next); } catch (e) {}
+  applyTheme();
 };
+darkQ.addEventListener('change', applyTheme);
+
 function buildBars() {
   if (bars) { grid.remove(bars); bars.geometry.dispose(); }
   labelObjs.forEach((o) => grid.remove(o)); labelObjs = [];
   if (plane) grid.remove(plane);
   const n = tm.n, L = tm.L;
-  const geo = boxGeo.clone();
-  geo.setAttribute('glow', new THREE.InstancedBufferAttribute(new Float32Array(n * L), 1));
-  bars = new THREE.InstancedMesh(geo, barMat, n * L);
+  bars = new THREE.InstancedMesh(boxGeo, barMat, n * L);
   bars.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(n * L * 3), 3);
   grid.add(bars);
   shown = new Float32Array(n * L).fill(TH);
   const w = (L - 1) * DX + 0.6, d = (n - 1) * DZ + 0.8;
-  plane = new THREE.Mesh(new THREE.PlaneGeometry(w + 0.6, d + 0.4), new THREE.MeshPhysicalMaterial({ color: 0x9fb2ff, transparent: true, opacity: 0.12, roughness: 0.1, side: THREE.DoubleSide, depthWrite: false }));
+  plane = new THREE.Mesh(new THREE.PlaneGeometry(w + 0.6, d + 0.4), planeMat);
   plane.rotation.x = -Math.PI / 2; plane.position.set(0, TH, 0); grid.add(plane);
-  const edge = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(w + 0.6, d + 0.4)), new THREE.LineBasicMaterial({ color: 0xa5b4fc, transparent: true, opacity: 0.6, toneMapped: false }));
-  edge.rotation.x = -Math.PI / 2; plane.add(edge); edge.rotation.x = 0;
+  planeEdge = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(w + 0.6, d + 0.4)), edgeMat);
+  plane.add(planeEdge);
   for (let j = 0; j < n; j++) {
-    const div = document.createElement('div'); div.className = 'rl ' + (j % 2 === 0 ? 'p' : 'n');
+    const div = document.createElement('div'); div.className = 'rl';
     div.textContent = 'C' + (j + 1) + (j % 2 === 0 ? ' +' : ' −');
-    const o = new CSS2DObject(div); o.position.set(-(L - 1) * DX / 2 - 0.75, 0.15, zOf(j)); grid.add(o); labelObjs.push(o);
+    const o = new CSS2DObject(div); o.position.set(-(L - 1) * DX / 2 - 0.8, 0.15, zOf(j)); grid.add(o); labelObjs.push(o);
   }
   for (let k = 0; k < L; k++) {
-    const div = document.createElement('div'); div.className = 'cl' + (k >= FEATURES ? ' neg' : '');
-    div.textContent = k < FEATURES ? NAMES[k] : '¬' + NAMES[k - FEATURES];
-    const o = new CSS2DObject(div); o.position.set(xOf(k), 0.02, (n - 1) * DZ / 2 + 0.7); grid.add(o); labelObjs.push(o);
-  }
-  const floor = grid.getObjectByName('floor');
-  if (!floor) {
-    const g = new THREE.GridHelper(14, 28, 0x4338ca, 0x1e1b4b); g.name = 'floor'; g.position.y = -0.01;
-    g.material.transparent = true; g.material.opacity = 0.5; grid.add(g);
+    const div = document.createElement('div'); div.className = 'cl';
+    div.innerHTML = fmt(k < FEATURES ? NAMES[k] : '¬' + NAMES[k - FEATURES]);
+    const o = new CSS2DObject(div); o.position.set(xOf(k), 0.02, (n - 1) * DZ / 2 + 0.75); grid.add(o); labelObjs.push(o);
   }
 }
 const xOf = (k) => (k - (tm.L - 1) / 2) * DX + (k >= FEATURES ? 0.22 : -0.22);
 const zOf = (j) => (j - (tm.n - 1) / 2) * DZ;
 const dummy = new THREE.Object3D();
 function updateBars(dt) {
-  const n = tm.n, L = tm.L, glow = bars.geometry.attributes.glow;
+  const n = tm.n, L = tm.L;
   for (let j = 0; j < n; j++) for (let k = 0; k < L; k++) {
     const i = j * L + k, st = tm.ta[i];
     const target = Math.max(0.04, (st / (2 * STATES)) * HMAX);
-    shown[i] += (target - shown[i]) * Math.min(1, dt * 8);
+    shown[i] = shown[i] < 0 ? target : shown[i] + (target - shown[i]) * Math.min(1, dt * 8);
     dummy.position.set(xOf(k), 0, zOf(j));
     dummy.scale.set(1, shown[i], 1);
     dummy.updateMatrix();
     bars.setMatrixAt(i, dummy.matrix);
     const inc = shown[i] > TH;
-    const col = inc ? (k < FEATURES ? C_POS : C_NEG) : C_OFF;
-    bars.setColorAt(i, col);
-    glow.array[i] = inc ? 0.9 : 0.0;
+    bars.setColorAt(i, inc ? (k < FEATURES ? cPos : cNeg) : cOff);
   }
-  bars.instanceMatrix.needsUpdate = true; bars.instanceColor.needsUpdate = true; glow.needsUpdate = true;
+  bars.instanceMatrix.needsUpdate = true; bars.instanceColor.needsUpdate = true;
 }
 function resize() {
   const w = stage.clientWidth, h = stage.clientHeight;
-  renderer.setSize(w, h, false); composer.setSize(w, h); bloom.resolution.set(w, h); labelRenderer.setSize(w, h);
+  renderer.setSize(w, h, false); labelRenderer.setSize(w, h);
   camera.aspect = w / h; camera.fov = w < 600 ? 55 : 42; camera.updateProjectionMatrix();
 }
 addEventListener('resize', resize);
@@ -284,28 +285,28 @@ function refreshText() {
     const t = tm.clauseText(j, NAMES); texts.push(t);
     const row = document.createElement('div');
     const pos = j % 2 === 0;
-    row.innerHTML = '<span class="tag ' + (pos ? 'p' : 'n') + '">C' + (j + 1) + (pos ? ' +' : ' −') + '</span><code' + (lastTexts[j] && lastTexts[j] !== t ? ' class="changed"' : '') + '>' + t + '</code>';
+    row.innerHTML = '<span class="tag">C' + (j + 1) + (pos ? ' +' : ' −') + '</span><span class="f' + (lastTexts[j] && lastTexts[j] !== t ? ' changed' : '') + '">' + (t === '(empty)' ? 'empty' : fmt(t)) + '</span>';
     box.append(row);
   }
   lastTexts = texts;
-  // verdict: every + clause is one XOR term and every − clause is a non-XOR term, no noise inputs
   const posOK = new Set(['x1 ∧ ¬x2', 'x2 ∧ ¬x1']), negOK = new Set(['x1 ∧ x2', '¬x1 ∧ ¬x2']);
-  const solved = texts.every((t, j) => (j % 2 === 0 ? posOK.has(t) : negOK.has(t))) && texts.filter((t, j) => j % 2 === 0).some((t) => t === 'x1 ∧ ¬x2') && texts.filter((t, j) => j % 2 === 0).some((t) => t === 'x2 ∧ ¬x1');
-  $('verdict').style.display = solved ? 'block' : 'none';
+  const plus = texts.filter((t, j) => j % 2 === 0);
+  const solved = texts.every((t, j) => (j % 2 === 0 ? posOK.has(t) : negOK.has(t))) && plus.includes('x1 ∧ ¬x2') && plus.includes('x2 ∧ ¬x1');
+  $('found').style.display = solved ? 'block' : 'none';
   $('epoch').textContent = epoch;
   $('acc').textContent = (history[history.length - 1] * 100).toFixed(1) + '%';
 }
 function drawChart() {
-  const c = $('chart'), dpr = Math.min(devicePixelRatio || 1, 2);
+  const c = $('chart'); if (!c) return;
+  const dpr = Math.min(devicePixelRatio || 1, 2);
   const w = c.clientWidth, h = c.clientHeight; c.width = w * dpr; c.height = h * dpr;
   const g = c.getContext('2d'); g.scale(dpr, dpr); g.clearRect(0, 0, w, h);
-  g.strokeStyle = 'rgba(148,163,184,.25)'; g.setLineDash([3, 4]);
+  const cs = getComputedStyle(document.documentElement);
+  g.strokeStyle = cs.getPropertyValue('--rule').trim() || 'rgba(0,0,0,.14)'; g.lineWidth = 1;
   [0.5, 0.75, 1].forEach((v) => { const y = h - 6 - (v - 0.45) / 0.57 * (h - 12); g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); });
-  g.setLineDash([]);
   const pts = history.slice(-30);
   if (pts.length < 2) return;
-  const grad = g.createLinearGradient(0, 0, w, 0); grad.addColorStop(0, '#22d3ee'); grad.addColorStop(1, '#a78bfa');
-  g.strokeStyle = grad; g.lineWidth = 2.2; g.beginPath();
+  g.strokeStyle = cs.getPropertyValue('--ink').trim() || '#101614'; g.lineWidth = 2; g.beginPath();
   pts.forEach((v, i) => { const x = i / (pts.length - 1) * (w - 4) + 2, y = h - 6 - (v - 0.45) / 0.57 * (h - 12); i ? g.lineTo(x, y) : g.moveTo(x, y); });
   g.stroke();
 }
@@ -317,11 +318,11 @@ function newExample() {
 function explain() {
   const x = example, lit = tm.literals(x), { v, outs } = tm.vote(lit, false);
   const pred = v >= 0 ? 1 : 0, truth = x[0] ^ x[1];
-  $('bits').innerHTML = [...x].map((b, k) => '<span class="' + (k > 1 ? 'noise' : '') + '">' + b + '</span>').join('') + ' <span style="color:var(--dim);font-size:13px;letter-spacing:0">x1..x6</span>';
+  $('bits').innerHTML = [...x].map((b, k) => '<span class="' + (k > 1 ? 'noise' : '') + '">' + b + '</span>').join('') + '<small>inputs 1 to 6</small>';
   const fired = [];
-  for (let j = 0; j < tm.n; j++) if (outs[j]) fired.push('<span class="fire">C' + (j + 1) + (j % 2 === 0 ? ' (+)' : ' (−)') + '</span> <code>' + tm.clauseText(j, NAMES) + '</code>');
-  $('explain').innerHTML = (fired.length ? 'Clauses that fire: ' + fired.join(', ') : 'No clause fires yet.') +
-    '<br>Vote: <b>' + (v > 0 ? '+' : '') + v + '</b> → prediction <b>' + pred + '</b>, and x1 XOR x2 = <b>' + truth + '</b> ' + (pred === truth ? '✓' : '✗ (still learning)');
+  for (let j = 0; j < tm.n; j++) if (outs[j]) fired.push('C' + (j + 1) + ' (' + fmt(tm.clauseText(j, NAMES)) + ')');
+  $('explain').innerHTML = (fired.length ? 'Clauses that fire: ' + fired.join(', ') + '.' : 'No clause fires yet.') +
+    '<br>The vote is ' + (v > 0 ? '+' : '') + v + ', so it predicts <b>' + pred + '</b>. The truth is <b>' + truth + '</b>, ' + (pred === truth ? 'so it is right.' : 'so it is still learning.');
 }
 
 // ------------------------------------------------------------- controls
@@ -348,6 +349,7 @@ function runSamples(k) {
 }
 
 // ------------------------------------------------------------- loop
+applyTheme();
 build();
 $('play').textContent = playing ? 'Pause' : 'Play';
 resize();
@@ -356,6 +358,7 @@ let textTimer = 0;
 function frame() {
   requestAnimationFrame(frame);
   const dt = Math.min(clock.getDelta(), 0.05);
+  if (document.hidden) return;
   if (playing) {
     runSamples(+$('speed').value);
     textTimer += dt;
@@ -363,10 +366,11 @@ function frame() {
   }
   updateBars(dt);
   controls.update();
-  composer.render();
+  renderer.render(scene, camera);
   labelRenderer.render(scene, camera);
 }
 frame();
+window.__tm = { get tm() { return tm; }, runSamples, get epoch() { return epoch; } };
 </script>
 </body>
 </html>
