@@ -60,6 +60,7 @@
     <nav class="nav" aria-label="Main">
       <a href="#work">Work</a>
       <a href="#demo">Demo</a>
+      <a href="#lab" class="opt">Lab</a>
       <a href="#pixie" class="opt">Pixie</a>
       <a href="#papers" class="opt">Papers</a>
       <a href="#about" class="opt-xs">About</a>
@@ -158,6 +159,39 @@
     </div>
   </section>
 
+  <section class="block lab" id="lab" aria-labelledby="lab-title">
+    <div class="wrap">
+      <h2 id="lab-title">Four studies you can run, and watch</h2>
+      <p class="lead">Each of these runs the actual method in your browser tab, on real data, and each is tested against the project’s own code or an independent checker. Every one comes with a film under a minute long.</p>
+      <div class="lab-grid">
+        <article class="lab-item" id="lab-veritas">
+          <div class="lab-film"><video controls playsinline preload="none" poster="assets/video/veritas-poster.jpg" width="1280" height="720" aria-label="VERITAS, a 47-second film"><source src="assets/video/veritas-720p.mp4" type="video/mp4"></video></div>
+          <h3><a href="https://anwardebes.github.io/veritas/">VERITAS</a> <span class="lab-tag">formal verification</span></h3>
+          <p>A SAT solver in your tab checks a prompt-injection guard against every possible input, finds a bypass, repairs it, and hands you a proof that a standard checker accepts.</p>
+          <div class="links"><a class="cta" href="https://anwardebes.github.io/veritas/">Open it live</a><a href="https://github.com/AnwarDebes/veritas">Code and paper</a></div>
+        </article>
+        <article class="lab-item" id="lab-trace">
+          <div class="lab-film"><video controls playsinline preload="none" poster="assets/video/trace-poster.jpg" width="1280" height="720" aria-label="TRACE, a 47-second film"><source src="assets/video/trace-720p.mp4" type="video/mp4"></video></div>
+          <h3><a href="https://anwardebes.github.io/trace/">TRACE</a> <span class="lab-tag">AI safety</span></h3>
+          <p>A simulated agent session where every call looks innocent and the session is not: monitors with a few hundred bytes of memory catch it, and a signed ledger that TRACE’s own Python verifier accepts shows any edit.</p>
+          <div class="links"><a class="cta" href="https://anwardebes.github.io/trace/">Open it live</a><a href="https://github.com/AnwarDebes/trace">Code and paper</a></div>
+        </article>
+        <article class="lab-item" id="lab-candor">
+          <div class="lab-film"><video controls playsinline preload="none" poster="assets/video/candor-poster.jpg" width="1280" height="720" aria-label="CANDOR, a 50-second film"><source src="assets/video/candor-720p.mp4" type="video/mp4"></video></div>
+          <h3><a href="https://anwardebes.github.io/candor/">CANDOR</a> <span class="lab-tag">interpretability</span></h3>
+          <p>A trained network that reads its input through named concepts and certifies every answer. Switch a concept off, plant a backdoor trigger, and watch the certificate respond.</p>
+          <div class="links"><a class="cta" href="https://anwardebes.github.io/candor/">Open it live</a><a href="https://github.com/AnwarDebes/candor">Code and paper</a></div>
+        </article>
+        <article class="lab-item" id="lab-glassbox">
+          <div class="lab-film"><video controls playsinline preload="none" poster="assets/video/glassbox-poster.jpg" width="1280" height="720" aria-label="glassbox-lm, a 50-second film"><source src="assets/video/glassbox-720p.mp4" type="video/mp4"></video></div>
+          <h3><a href="https://anwardebes.github.io/glassbox-lm/">glassbox-lm</a> <span class="lab-tag">my master’s research</span></h3>
+          <p>Ten public-domain books, counted in your tab. Every next word is a sum of clause votes you can read, each traced back to the page it was counted on: the floor a logic-based language model has to beat.</p>
+          <div class="links"><a class="cta" href="https://anwardebes.github.io/glassbox-lm/">Open it live</a><a href="https://github.com/AnwarDebes/glassbox-lm">Code and studies</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section class="block" id="work" aria-labelledby="work-title">
     <div class="wrap">
       <h2 id="work-title">Selected work</h2>
@@ -181,25 +215,25 @@
               <h3><a href="https://github.com/AnwarDebes/glassbox-lm">glassbox-lm</a></h3>
               <p>My master’s research: steps toward a language model whose knowledge is a set of readable Tsetlin Machine clauses.</p>
               <p class="result">Three studies so far. The first registered 91 hypotheses before a single run, and the write-up leads with what did not work.</p>
-              <div class="links"><a href="https://github.com/AnwarDebes/glassbox-lm">Code</a><a href="universe/#glassbox">See it in the research map</a></div>
+              <div class="links"><a href="https://anwardebes.github.io/glassbox-lm/">Live demo</a><a href="#lab-glassbox">Watch the film</a><a href="https://github.com/AnwarDebes/glassbox-lm">Code</a><a href="universe/#glassbox">See it in the research map</a></div>
             </li>
             <li class="work-item" id="candor" data-emblem="candor" tabindex="-1">
               <h3><a href="https://github.com/AnwarDebes/candor">CANDOR</a></h3>
               <p>Interpretability by construction. A layer’s computation runs through named concepts, and every forward pass emits a certificate anyone can re-check.</p>
               <p class="result">On synthetic ground truth: δ ≈ 0.002 with no measurable accuracy cost, and backdoor detection at AUC ≈ 0.90.</p>
-              <div class="links"><a href="https://github.com/AnwarDebes/candor/blob/main/paper/candor.pdf">Paper</a><a href="https://github.com/AnwarDebes/candor">Code</a></div>
+              <div class="links"><a href="https://anwardebes.github.io/candor/">Live demo</a><a href="#lab-candor">Watch the film</a><a href="https://github.com/AnwarDebes/candor/blob/main/paper/candor.pdf">Paper</a><a href="https://github.com/AnwarDebes/candor">Code</a></div>
             </li>
             <li class="work-item" id="trace" data-emblem="trace" tabindex="-1">
               <h3><a href="https://github.com/AnwarDebes/TRACE">TRACE</a></h3>
               <p>A CPU-only guardrail for AI agents: readable content clauses, bounded-memory temporal monitors and a tamper-evident certificate ledger that can be verified without the model.</p>
               <p class="result">F1 0.827 on deepset/prompt-injections at 107 µs per check, in 12.5 KiB. It is the one you just tried to fool.</p>
-              <div class="links"><a href="https://github.com/AnwarDebes/TRACE/blob/main/paper/trace.pdf">Paper</a><a href="https://github.com/AnwarDebes/TRACE">Code</a></div>
+              <div class="links"><a href="https://anwardebes.github.io/trace/">Live demo</a><a href="#lab-trace">Watch the film</a><a href="https://github.com/AnwarDebes/TRACE/blob/main/paper/trace.pdf">Paper</a><a href="https://github.com/AnwarDebes/TRACE">Code</a></div>
             </li>
             <li class="work-item" id="veritas" data-emblem="veritas" tabindex="-1">
               <h3><a href="https://github.com/AnwarDebes/veritas">VERITAS</a></h3>
               <p>A guardrail whose safety properties are proved or refuted by SAT and SMT solvers, with bypasses repaired by construction.</p>
               <p class="result">Retraining stalls at 8 provable bypasses. Constructive repair reaches 0, and accuracy goes from 0.69 to 0.71.</p>
-              <div class="links"><a href="https://github.com/AnwarDebes/veritas/blob/main/paper/veritas.pdf">Paper</a><a href="https://github.com/AnwarDebes/veritas">Code</a></div>
+              <div class="links"><a href="https://anwardebes.github.io/veritas/">Live demo</a><a href="#lab-veritas">Watch the film</a><a href="https://github.com/AnwarDebes/veritas/blob/main/paper/veritas.pdf">Paper</a><a href="https://github.com/AnwarDebes/veritas">Code</a></div>
             </li>
             <li class="work-item" id="lucid" data-emblem="lucid" tabindex="-1">
               <h3><a href="https://github.com/AnwarDebes/lucid">LUCID</a></h3>
