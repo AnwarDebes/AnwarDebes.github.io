@@ -217,6 +217,71 @@ const draw = {
     x.fillStyle = col(0.8); roundRect(x, 110, 92, 60, 52, 6); x.fill();
     x.fillStyle = col(0.45); roundRect(x, 92, 186, 72, 18, 8); x.fill();
   },
+  nexus(x) {
+    // the 121-hole star board of Chinese Checkers, with one marble hopping out of its home triangle
+    const R = 4, sz = 9.2, cells = [];
+    for (let q = -2 * R; q <= 2 * R; q++) for (let r = -2 * R; r <= 2 * R; r++) {
+      const s = -q - r;
+      const inHex = Math.max(Math.abs(q), Math.abs(r), Math.abs(s)) <= R;
+      const tip = (a, b2, c2) => a > R && a <= 2 * R && b2 <= 0 && c2 <= 0 && b2 >= -R && c2 >= -R;
+      if (inHex || tip(q, r, s) || tip(r, q, s) || tip(s, q, r) || tip(-q, -r, -s) || tip(-r, -q, -s) || tip(-s, -q, -r)) cells.push([q, r]);
+    }
+    const px = ([q, r]) => [128 + sz * Math.sqrt(3) * (q + r / 2), 128 + sz * 1.5 * r];
+    const key = ([q, r]) => q + ',' + r;
+    const start = [-1, 5], land = [[-1, 3], [-1, 1], [-1, -1]], over = new Set([[-1, 4], [-1, 2], [-1, 0]].map(key));
+    for (const c of cells) {
+      const [X, Y] = px(c);
+      const k = key(c);
+      const home = c[1] > R && k !== key(start);
+      const h = home ? 0.95 : over.has(k) ? 0.7 : 0.34;
+      x.fillStyle = col(h, home || over.has(k) ? 1 : 0.6);
+      x.beginPath(); x.arc(X, Y, home || over.has(k) ? 7 : 4.8, 0, Math.PI * 2); x.fill();
+    }
+    x.strokeStyle = col(0.8, 1); x.lineWidth = 4.5;
+    let from = px(start);
+    for (const l of land) {
+      const to = px(l);
+      x.beginPath(); x.moveTo(...from); x.quadraticCurveTo((from[0] + to[0]) / 2 + 17, (from[1] + to[1]) / 2, ...to); x.stroke();
+      from = to;
+    }
+    x.fillStyle = col(1.0, 1); x.beginPath(); x.arc(...from, 7.6, 0, Math.PI * 2); x.fill();
+  },
+  idm(x) {
+    // a star schema: one fact table in the middle, four dimension tables around it
+    const dims = [[128, 40], [216, 128], [128, 216], [40, 128]];
+    x.strokeStyle = col(0.4); x.lineWidth = 9;
+    x.beginPath(); for (const d of dims) { x.moveTo(128, 128); x.lineTo(...d); } x.stroke();
+    x.fillStyle = col(0.62);
+    for (const [px, py] of dims) { roundRect(x, px - 26, py - 19, 52, 38, 7); x.fill(); }
+    x.fillStyle = col(0.95, 1); roundRect(x, 90, 98, 76, 60, 9); x.fill();
+    x.strokeStyle = col(0.7, 0.85); x.lineWidth = 6;
+    x.beginPath(); x.moveTo(102, 118); x.lineTo(154, 118); x.moveTo(102, 138); x.lineTo(154, 138); x.stroke();
+  },
+  sleep(x) {
+    // a 24-hour dial with tonight's sleep marked, and a crescent moon in the middle
+    const c = 128, r = 98;
+    const ang = h => (h / 24) * Math.PI * 2 - Math.PI / 2;
+    x.strokeStyle = col(0.34); x.lineWidth = 8;
+    x.beginPath(); x.arc(c, c, r, 0, Math.PI * 2); x.stroke();
+    x.strokeStyle = col(0.55); x.lineWidth = 8;
+    for (const h of [0, 6, 12, 18]) {
+      const a = ang(h);
+      x.beginPath(); x.moveTo(c + (r - 22) * Math.cos(a), c + (r - 22) * Math.sin(a)); x.lineTo(c + (r - 10) * Math.cos(a), c + (r - 10) * Math.sin(a)); x.stroke();
+    }
+    x.strokeStyle = col(0.9, 1); x.lineWidth = 18;
+    x.beginPath(); x.arc(c, c, r, ang(23), ang(31)); x.stroke();
+    x.fillStyle = col(0.95, 1); x.beginPath(); x.arc(c - 4, c + 6, 40, 0, Math.PI * 2); x.fill();
+    x.fillStyle = 'rgb(0, 235, 0)'; x.beginPath(); x.arc(c + 16, c - 8, 36, 0, Math.PI * 2); x.fill();
+  },
+  thermo(x) {
+    // a house with a thermometer inside: heat risk is an indoor problem
+    x.strokeStyle = col(0.55); x.lineWidth = 12;
+    x.beginPath(); x.moveTo(50, 122); x.lineTo(128, 52); x.lineTo(206, 122); x.stroke();
+    x.beginPath(); x.moveTo(72, 108); x.lineTo(72, 214); x.lineTo(184, 214); x.lineTo(184, 108); x.stroke();
+    x.fillStyle = col(0.6); roundRect(x, 116, 104, 24, 92, 12); x.fill();
+    x.fillStyle = col(1.0, 1); roundRect(x, 123, 132, 10, 64, 5); x.fill();
+    x.beginPath(); x.arc(128, 194, 17, 0, Math.PI * 2); x.fill();
+  },
 };
 
 function roundRect(x, X, Y, W, H, r) {

@@ -213,6 +213,12 @@ async function startBoards() {
     lucid: 'LUCID: an ARC-style puzzle grid.',
     graphtm: 'graphtm-cbr: nitrobenzene, a textbook Ames-positive molecule.',
     vsclaude: 'vsclaude: Pixie, who acts out what your coding agent is doing.',
+    nexus: 'NEXUS: the 121-hole star board, with one marble hopping out of its home triangle.',
+    pocketos: 'PocketOS: a phone with a desktop inside.',
+    sleep: 'SleepArchitect: a 24-hour dial with tonight’s sleep marked.',
+    idm: 'IDM: a star schema, one of the three ways it stores the same data.',
+    thermo: 'ThermoGuard: a house with a thermometer inside, because heat risk is an indoor problem.',
+    mneme: 'Mneme: a textbook turning into a stack of flash cards.',
   };
   const caption = document.getElementById('emblem-caption');
   function showEmblem(name, from) {
