@@ -107,6 +107,13 @@ ul.facts b{color:var(--text)}
 .card p{margin:0;color:#cbd5e1;font-size:15.5px}
 .card .m{margin-top:12px;padding-top:12px;border-top:1px dashed var(--line2);font-size:14.5px;color:var(--muted)}
 .card .m b{color:var(--teal);font-weight:600}
+.explore{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
+.xcard{display:block;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:rgba(11,18,34,.7);color:var(--text);transition:transform .25s,border-color .25s}
+.xcard:hover{transform:translateY(-4px);border-color:#6d28d9;text-decoration:none}
+.xcard img{display:block;width:100%;aspect-ratio:2/1;object-fit:cover;border-bottom:1px solid var(--line)}
+.xcard div{padding:16px 18px 18px}
+.xcard b{display:block;font:700 21px "Space Grotesk",Inter,sans-serif;margin-bottom:4px}
+.xcard span{color:var(--muted);font-size:15px}
 .stack{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:28px;counter-reset:s}
 .step{padding:18px;border:1px solid var(--line);border-radius:16px;background:rgba(11,18,34,.6)}
 .step b{font:700 20px "Space Grotesk",Inter,sans-serif}
@@ -126,6 +133,7 @@ footer{max-width:1100px;margin:80px auto 0;padding:28px clamp(18px,5vw,40px) 48p
 @media (max-width:900px){
  .stats{grid-template-columns:repeat(2,1fr)}
  .stack{grid-template-columns:repeat(2,1fr)}
+ .explore{grid-template-columns:1fr}
  .caption{left:50%;bottom:58px;font-size:13px}
  .hint{display:none}
  nav .links a.hide-sm{display:none}
@@ -142,7 +150,7 @@ footer{max-width:1100px;margin:80px auto 0;padding:28px clamp(18px,5vw,40px) 48p
   <nav>
     <a class="logo" href="#top"><img src="favicon.svg" alt="">Anwar Debes</a>
     <div class="links">
-      <a href="#about">About</a><a href="#work">Work</a><a class="hide-sm" href="#papers">Papers</a><a class="hide-sm" href="#faq">FAQ</a><a href="https://github.com/AnwarDebes">GitHub</a>
+      <a href="universe/">Universe</a><a class="hide-sm" href="tm/">Live demo</a><a href="#work">Work</a><a class="hide-sm" href="#papers">Papers</a><a href="https://github.com/AnwarDebes">GitHub</a>
     </div>
   </nav>
   <div class="intro">
@@ -156,8 +164,8 @@ footer{max-width:1100px;margin:80px auto 0;padding:28px clamp(18px,5vw,40px) 48p
       <a class="chip" href="https://nyheter.ntnu.no/disse-har-vunnet-eurekaprisen-2025/#:~:text=Automatic%20Removal%20of%20Sensitive%20Content,Yasin%20Hessnawi"><i style="background:var(--amber)"></i>Eurekaprisen 2025</a>
     </div>
     <div class="cta">
-      <a class="btn primary" href="https://github.com/AnwarDebes">View on GitHub</a>
-      <a class="btn" href="#work">Selected work</a>
+      <a class="btn primary" href="universe/">Explore the Research Universe</a>
+      <a class="btn" href="tm/">Watch a Tsetlin Machine learn</a>
     </div>
   </div>
   <div class="caption mono" id="caption"></div>
@@ -185,6 +193,15 @@ footer{max-width:1100px;margin:80px auto 0;padding:28px clamp(18px,5vw,40px) 48p
   </div>
 </section>
 
+<section id="explore">
+  <p class="kicker">Explore in 3D</p>
+  <h2>Two things you can actually touch</h2>
+  <div class="explore">
+    <a class="xcard" href="universe/"><img src="universe/og.png" alt="Research Universe: every public project as a star you can orbit and click" loading="lazy"><div><b>Research Universe</b><span>All 39 public projects as a 3D universe. Orbit it, search it, take the guided tour of the most important work.</span></div></a>
+    <a class="xcard" href="tm/"><img src="tm/og.png" alt="A Tsetlin Machine learning XOR live, its automata shown as 3D bars" loading="lazy"><div><b>Watch a Tsetlin Machine learn</b><span>A real Tsetlin Machine runs in your browser, ignores the noise, finds XOR, and writes down why.</span></div></a>
+  </div>
+</section>
+
 <section id="work">
   <p class="kicker">Selected work</p>
   <h2>Clauses you can read, certificates you can check</h2>
@@ -198,9 +215,9 @@ footer{max-width:1100px;margin:80px auto 0;padding:28px clamp(18px,5vw,40px) 48p
     <article class="card"><h3><a href="https://github.com/AnwarDebes/trace">TRACE</a></h3><div class="k">AI safety · paper</div>
       <p>A CPU-only guardrail for AI agents with readable clauses, temporal monitors and a tamper-evident certificate ledger.</p>
       <div class="m">F1 <b>0.827</b> on deepset/prompt-injections at <b>107 µs</b> per check, in 12.5 KiB.</div></article>
-    <article class="card"><h3><a href="https://github.com/AnwarDebes/THGTM">THGTM</a></h3><div class="k">AI safety · paper</div>
-      <p>Tsetlin Machines that remember: Echo-Trace automata and bounded temporal literals for verifying whole agent trajectories.</p>
-      <div class="m">Slow-roll exfiltration (synthetic): attack success <b>0.687</b> per step, <b>0.000</b> with trajectory monitors.</div></article>
+    <article class="card"><h3><a href="https://github.com/AnwarDebes/lucid">LUCID</a></h3><div class="k">ARC-AGI-3 · paper</div>
+      <p>A glass-box, safety-shielded agent for ARC-AGI-3, with a readable world model and a decision trace for every step. CPU only.</p>
+      <div class="m">Completes <b>2</b> public levels (VC33, LP85). Its overall score sits in the same sub-1% regime as frontier models, and the README says so.</div></article>
     <article class="card"><h3><a href="https://github.com/AnwarDebes/veritas">VERITAS</a></h3><div class="k">Formal verification · paper</div>
       <p>An interpretable guardrail whose declared safety properties are proved or refuted by SAT/SMT solvers, with bypasses repaired by construction.</p>
       <div class="m">Constructive repair reaches <b>0</b> provable bypasses while accuracy goes 0.69 → 0.71.</div></article>
