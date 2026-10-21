@@ -60,6 +60,7 @@
     <nav class="nav" aria-label="Main">
       <a href="#work">Work</a>
       <a href="#demo">Demo</a>
+      <a href="#pixie" class="opt">Pixie</a>
       <a href="#papers" class="opt">Papers</a>
       <a href="#about" class="opt-xs">About</a>
       <a href="cv/">CV</a>
@@ -115,6 +116,45 @@
         </div>
       </div>
       <p class="demo-note" id="demo-note">When it is wrong, the clauses show you exactly why, which is the whole point. Nothing you type leaves your browser. The model here is seed 0 of the paper’s twelve-seed protocol, trained on the 546 training prompts of deepset/prompt-injections. On the 116 held-out prompts it scores F1 0.819 (accuracy 0.836). <a href="https://github.com/AnwarDebes/TRACE">Code and paper</a>.</p>
+    </div>
+  </section>
+
+  <section class="block film" id="pixie" aria-labelledby="pixie-title">
+    <div class="wrap">
+      <h2 id="pixie-title">A coding agent that shows its work, too</h2>
+      <p class="lead">Coding agents usually give you a spinner while they change your code. Pixie, my open-source agent for any model, acts out every step instead, and nothing is edited or run until you say yes. Here is the 54-second film.</p>
+      <div class="film-frame">
+        <video id="pixie-video" controls playsinline preload="none" poster="assets/video/pixie-poster.jpg" width="1280" height="720" aria-describedby="pixie-film-desc">
+          <source src="assets/video/pixie-promo-720p.mp4" type="video/mp4">
+          <source src="assets/video/pixie-promo-720p.webm" type="video/webm">
+        </video>
+        <button class="film-sound" type="button" hidden>Watch with sound</button>
+      </div>
+      <p class="visually-hidden" id="pixie-film-desc">A short film: a spinner turns into Pixie, a coral pixel creature. It acts out thinking, reading, searching, editing and running tests, then fixes a real bug in the Pixie browser UI while waiting for approval before each edit.</p>
+      <div class="film-row">
+        <div class="playground">
+          <canvas id="pixie-play" width="200" height="200" aria-hidden="true"></canvas>
+          <div class="pg-text">
+            <p class="pg-label">Right now, Pixie is <strong id="pixie-state" aria-live="polite">Resting</strong></p>
+            <div class="pg-buttons" role="group" aria-label="Make Pixie act out a state">
+              <button type="button" data-state="thinking">Thinking</button>
+              <button type="button" data-state="reading">Reading</button>
+              <button type="button" data-state="searching">Searching</button>
+              <button type="button" data-state="writing">Editing</button>
+              <button type="button" data-state="running">Running</button>
+              <button type="button" data-state="debugging">Debugging</button>
+              <button type="button" data-state="waiting">Waiting</button>
+              <button type="button" data-state="success">Done</button>
+              <button type="button" data-state="error">Uh oh</button>
+            </div>
+          </div>
+        </div>
+        <div class="film-links">
+          <a class="cta" href="https://anwardebes.github.io/Claude-Code-In-Motion/">Try the live demo</a>
+          <a href="https://github.com/AnwarDebes/Claude-Code-In-Motion">Code on GitHub</a>
+          <code class="install">npm i -g github:AnwarDebes/Claude-Code-In-Motion</code>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -218,6 +258,12 @@
               <p class="result">House rule: every animation is bound to a real event. In beta, built with Tauri, React and TypeScript, with one event pipeline designed for several coding agents and local models.</p>
               <div class="links"><a href="https://github.com/AnwarDebes/vsclaude">Code</a><a href="universe/#vsc">See it in the research map</a></div>
             </li>
+            <li class="work-item" id="pixie-agent" data-emblem="pixie" tabindex="-1">
+              <h3><a href="https://github.com/AnwarDebes/Claude-Code-In-Motion">Claude Code, in motion</a></h3>
+              <p>Pixie on its own: a local coding agent for any model, with zero runtime dependencies and a browser UI where the mascot acts out every tool call. Reading runs freely, every edit and shell command waits for your OK, and catastrophic commands are refused even in auto-approve mode.</p>
+              <p class="result">32 tests, six providers, one command to install. The live demo replays a recorded session in the real UI, and you decide whether the edit goes through.</p>
+              <div class="links"><a href="https://anwardebes.github.io/Claude-Code-In-Motion/">Live demo</a><a href="#pixie">Watch the film</a><a href="https://github.com/AnwarDebes/Claude-Code-In-Motion">Code</a></div>
+            </li>
           </ol>
         </div>
       </div>
@@ -314,5 +360,6 @@
 </footer>
 
 <script type="module" src="assets/js/home.js"></script>
+<script type="module" src="assets/js/pixie.js"></script>
 </body>
 </html>
