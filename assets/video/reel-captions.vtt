@@ -1,0 +1,86 @@
+WEBVTT
+
+1
+00:00:01.150 --> 00:00:03.325
+Most AI hands you an answer.
+
+2
+00:00:03.800 --> 00:00:06.000
+Very little of it shows you why.
+
+3
+00:00:06.650 --> 00:00:09.400
+Anwar Debes builds the kind that does.
+
+4
+00:00:12.950 --> 00:00:16.990
+At the University of Agder, he researches Tsetlin Machines:
+
+5
+00:00:17.000 --> 00:00:23.225
+models whose every decision is a set of logical clauses you can read, check, and argue with.
+
+6
+00:00:24.150 --> 00:00:30.500
+His master's research, glassbox-lm, takes measured steps toward a language model you can read.
+
+7
+00:00:30.900 --> 00:00:34.425
+Ninety-one hypotheses, written down before the runs.
+
+8
+00:00:34.700 --> 00:00:39.325
+Every result reported as measured, including the ones that did not work.
+
+9
+00:00:39.850 --> 00:00:41.950
+He builds AI you can check.
+
+10
+00:00:42.400 --> 00:00:48.250
+VERITAS proves a guardrail's safety rules, or hands you the exact input that breaks one.
+
+11
+00:00:48.600 --> 00:00:54.525
+TRACE catches an attack hidden in innocent steps, and signs a ledger anyone can verify.
+
+12
+00:00:54.900 --> 00:00:58.850
+CANDOR puts a certificate on every answer a network gives.
+
+13
+00:00:59.500 --> 00:01:03.202
+At NTNU, his bachelor team won the Eureka Prize for
+
+14
+00:01:03.212 --> 00:01:08.800
+software that finds and removes sensitive content in images and documents.
+
+15
+00:01:09.150 --> 00:01:15.275
+Today, he is CFO of SafeMediAI, the Norwegian startup behind DeclassifAI.
+
+16
+00:01:15.800 --> 00:01:20.240
+Outside the lab, he builds game-playing agents, data warehouses,
+
+17
+00:01:20.250 --> 00:01:23.175
+and apps that run entirely in your browser.
+
+18
+00:01:23.500 --> 00:01:28.250
+Even his coding agent shows its work: Pixie acts out every step.
+
+19
+00:01:28.950 --> 00:01:31.025
+One rule runs through all of it.
+
+20
+00:01:31.400 --> 00:01:34.650
+If a system makes a claim, it should show its work.
+
+21
+00:01:35.650 --> 00:01:37.450
+Anwar Debes.
+
