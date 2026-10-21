@@ -44,6 +44,25 @@
   "sameAs": ["https://github.com/AnwarDebes"]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "Anwar Debes: AI that shows its work",
+  "description": "A 105-second narrated film about Anwar Debes and his work on interpretable AI, played on a wall of steel pins: Tsetlin Machines, glassbox-lm, VERITAS, TRACE, CANDOR, NTNU's Eurekaprisen and SafeMediAI.",
+  "thumbnailUrl": "https://anwardebes.github.io/assets/video/reel-poster.jpg",
+  "uploadDate": "2026-10-21",
+  "duration": "PT1M45S",
+  "contentUrl": "https://anwardebes.github.io/assets/video/reel-720p.mp4",
+  "inLanguage": "en",
+  "creator": {
+    "@type": "Person",
+    "name": "Anwar Debes",
+    "url": "https://anwardebes.github.io/"
+  },
+  "transcript": "Most AI hands you an answer. Very little of it shows you why. Anwar Debes builds the kind that does. At the University of Agder, he researches Tsetlin Machines: models whose every decision is a set of logical clauses you can read, check, and argue with. His master's research, glassbox-lm, takes measured steps toward a language model you can read. Ninety-one hypotheses, written down before the runs. Every result reported as measured, including the ones that did not work. He builds AI you can check. VERITAS proves a guardrail's safety rules, or hands you the exact input that breaks one. TRACE catches an attack hidden in innocent steps, and signs a ledger anyone can verify. CANDOR puts a certificate on every answer a network gives. At NTNU, his bachelor team won the Eureka Prize for software that finds and removes sensitive content in images and documents. Today, he is CFO of SafeMediAI, the Norwegian startup behind DeclassifAI. Outside the lab, he builds game-playing agents, data warehouses, and apps that run entirely in your browser. Even his coding agent shows its work: Pixie acts out every step. One rule runs through all of it. If a system makes a claim, it should show its work. Anwar Debes."
+}
+</script>
 <script type="importmap">
 { "imports": {
   "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
@@ -58,6 +77,7 @@
   <div class="wrap">
     <a class="brand" href="./">Anwar Debes</a>
     <nav class="nav" aria-label="Main">
+      <a href="#film" class="opt-xs">Film</a>
       <a href="#work">Work</a>
       <a href="#demo">Demo</a>
       <a href="#lab" class="opt">Lab</a>
@@ -90,6 +110,24 @@
           <button class="link-button" id="bool-toggle" type="button" aria-pressed="false">See me in true and false</button>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="block reel" id="film" aria-labelledby="film-title">
+    <div class="wrap">
+      <h2 id="film-title">The short version, in 105 seconds</h2>
+      <p class="lead">A portrait in steel pins becomes a map of Norway, a Tsetlin Machine you can argue with, ninety-one registered hypotheses and, in the last frame, a QR code you can scan straight off the screen. Every frame was rendered in a browser tab, like everything else on this site.</p>
+      <div class="film-frame reel-frame">
+        <video id="reel-video" controls playsinline preload="none" poster="assets/video/reel-poster.jpg" width="1280" height="720" aria-describedby="reel-desc">
+          <source src="assets/video/reel-1080p-av1.mp4" type='video/mp4; codecs="av01.0.08M.08, mp4a.40.2"'>
+          <source src="assets/video/reel-720p.mp4" type="video/mp4">
+          <track kind="captions" src="assets/video/reel-captions.vtt" srclang="en" label="English">
+          <track kind="chapters" src="assets/video/reel-chapters.vtt" srclang="en" label="Chapters">
+        </video>
+        <button class="film-sound" id="reel-sound" type="button" hidden>Watch with sound</button>
+      </div>
+      <p class="visually-hidden" id="reel-desc">A narrated short film about Anwar Debes and his work, with every word of the narration written on screen as it is spoken. The full transcript follows.</p>
+      <div class="reel-transcript" id="reel-transcript" aria-label="Transcript. Select a word to play the film from there."></div>
     </div>
   </section>
 
@@ -395,5 +433,6 @@
 
 <script type="module" src="assets/js/home.js"></script>
 <script type="module" src="assets/js/pixie.js"></script>
+<script type="module" src="assets/js/reel.js"></script>
 </body>
 </html>
