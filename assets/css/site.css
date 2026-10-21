@@ -269,6 +269,21 @@ section.block { position: relative; padding: clamp(72px, 12vh, 140px) 0; }
 .film-links .cta:hover { background: var(--glass); }
 .film-links .install { font-size: 13px; color: var(--graphite); background: var(--paper); border: 1px solid var(--rule); border-radius: 8px; padding: 6px 10px; max-width: 100%; overflow-wrap: anywhere; }
 
+/* The short film, and its transcript */
+.reel { border-top: 1px solid var(--rule); }
+.reel-frame { background: #050807; }
+.reel-transcript { margin-top: 34px; max-width: 54em; font-size: 19px; line-height: 1.62; color: var(--graphite); }
+.reel-transcript p { margin: 6px 0 16px; }
+.reel-chap { display: inline-flex; align-items: baseline; gap: 10px; margin-top: 10px; padding: 0; border: 0; background: none; font: inherit; font-size: 14px; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; color: var(--glass); cursor: pointer; }
+.reel-chap:hover { text-decoration: underline; text-underline-offset: 4px; }
+.reel-time { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-weight: 500; letter-spacing: 0; color: var(--graphite); }
+.reel-transcript .w { cursor: pointer; border-radius: 4px; transition: color 0.18s ease, background-color 0.18s ease; }
+.reel-transcript .w:hover { background: var(--paper); }
+.reel-transcript .w.em { font-family: var(--math); font-style: italic; font-size: 1.06em; }
+.reel-transcript .w.said { color: var(--ink); }
+.reel-transcript .w.now { color: var(--glass); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
+@media (max-width: 700px) { .reel-transcript { font-size: 17px; } }
+
 /* Live research films */
 .lab { border-top: 1px solid var(--rule); }
 .lab-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 52px 28px; margin-top: 44px; }
