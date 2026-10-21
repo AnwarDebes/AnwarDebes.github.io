@@ -181,7 +181,7 @@ async function startBoards() {
   const note = document.getElementById('board-note');
   const toggle = document.getElementById('bool-toggle');
   const pinCount = hb.N.toLocaleString('en-US');
-  note.textContent = `That’s me, in ${pinCount} steel pins. Run your pointer across to press them.`;
+  note.textContent = `That’s me, in ${pinCount} steel pins. They follow your pointer anywhere on the page; click to send a ripple.`;
   heroSlot.setAttribute('aria-label', `A portrait of Anwar Debes pressed into a board of ${pinCount} steel pins.`);
   let boolean = false;
   toggle.addEventListener('click', () => {
@@ -190,7 +190,7 @@ async function startBoards() {
     toggle.textContent = boolean ? 'Back to steel' : 'See me in true and false';
     note.textContent = boolean
       ? `A Tsetlin Machine reads images as true and false. This is me as ${pinCount} booleans, ${ones.toLocaleString('en-US')} of them true.`
-      : `That’s me, in ${pinCount} steel pins. Run your pointer across to press them.`;
+      : `That’s me, in ${pinCount} steel pins. They follow your pointer anywhere on the page; click to send a ripple.`;
     hb.setField(boolean ? boolField : faceField, reduceMotion.matches ? null : { u: 0.0, v: 1.0, speed: 2.2, jitter: 0.04 });
     if (reduceMotion.matches) hb.settle();
     wake();
@@ -248,12 +248,12 @@ async function startBoards() {
   items.forEach(li => io.observe(li));
 
   /* pointer: press the pins */
-  function bindPress(slot, view, radius) {
+  function bindPress(slot, view, radius, global = false) {
     let down = false;
     const at = e => view.uvAt(e.clientX, e.clientY);
     slot.addEventListener('pointermove', e => {
       const r = slot.getBoundingClientRect();
-      view.look(((e.clientX - r.left) / r.width) * 2 - 1, ((e.clientY - r.top) / r.height) * 2 - 1);
+      if (!global || reduceMotion.matches || e.pointerType === 'touch') view.look(((e.clientX - r.left) / r.width) * 2 - 1, ((e.clientY - r.top) / r.height) * 2 - 1);
       const p = at(e);
       if (p) view.board.press(p.u, p.v, radius * (down ? 1.25 : 1), down ? 0.95 : (e.pointerType === 'mouse' ? 0.55 : 0.9));
       wake();
@@ -267,10 +267,48 @@ async function startBoards() {
     const up = () => { down = false; };
     slot.addEventListener('pointerup', up);
     slot.addEventListener('pointercancel', up);
-    slot.addEventListener('pointerleave', () => { up(); view.look(0, 0); wake(); });
+    slot.addEventListener('pointerleave', () => { up(); if (!global || reduceMotion.matches) view.look(0, 0); wake(); });
   }
-  bindPress(heroSlot, hero, coarse ? 0.1 : 0.075);
+  bindPress(heroSlot, hero, coarse ? 0.1 : 0.085, true);
   bindPress(workSlot, work, 0.14);
+
+  /* the portrait senses the pointer anywhere on the page: it turns toward it, the light
+     follows it, and a soft hand behind the pins tracks it, strongest over the board */
+  if (!reduceMotion.matches) {
+    const clamp = (x, a, b) => Math.max(a, Math.min(b, x));
+    const heroSection = document.querySelector('.hero');
+    let lastMove = 0;
+    window.addEventListener('pointermove', e => {
+      if (e.pointerType === 'touch') return;
+      const r = heroSlot.getBoundingClientRect();
+      if (r.bottom < -100 || r.top > window.innerHeight + 100) return;
+      const nx = ((e.clientX - r.left) / r.width) * 2 - 1;
+      const ny = ((e.clientY - r.top) / r.height) * 2 - 1;
+      const inside = Math.abs(nx) <= 1 && Math.abs(ny) <= 1;
+      hero.look(clamp(nx, -1.6, 1.6) * 0.62, clamp(ny, -1.6, 1.6) * 0.62);
+      hero.light(clamp(nx, -1.6, 1.6), clamp(ny, -1.6, 1.6));
+      const p = hero.uvAt(e.clientX, e.clientY, true);
+      if (p) {
+        const cu = clamp(p.u, -0.35, 1.35), cv = clamp(p.v, -0.35, 1.35);
+        const out = Math.hypot(Math.max(0, Math.abs(cu - 0.5) - 0.5), Math.max(0, Math.abs(cv - 0.5) - 0.5));
+        if (inside) hb.magnet(p.u, p.v, 0.95, 0.065);
+        else hb.magnet(cu, cv, 0.85 * Math.exp(-out / 0.16), 0.09 + out * 0.25);
+      }
+      lastMove = performance.now();
+      wake();
+    }, { passive: true });
+    const rest = () => { hero.look(0, 0); hero.light(0, 0); hb.magnet(0.5, 0.5, 0, 0.08); wake(); };
+    document.documentElement.addEventListener('pointerleave', rest);
+    window.addEventListener('blur', rest);
+    // a click anywhere in the hero sends a ripple across the pins from the nearest point
+    heroSection.addEventListener('pointerdown', e => {
+      if (heroSlot.contains(e.target)) return;
+      const p = hero.uvAt(e.clientX, e.clientY, true);
+      if (!p) return;
+      hb.ripple(clamp(p.u, 0, 1), clamp(p.v, 0, 1), 0.07);
+      wake();
+    });
+  }
 
   /* render loop: only while something moves and the board is on screen */
   const visible = new Map([[hero, true], [work, false]]);

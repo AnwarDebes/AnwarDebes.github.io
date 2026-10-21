@@ -129,6 +129,8 @@ export class PinBoard {
     this.ripples = [];
     this.time = 0;
     this.awake = 1;
+    // a soft "hand behind the pins" that follows the pointer, even from outside the board
+    this.mag = { u: 0.5, v: 0.5, amp: 0, sigma: 0.08, tu: 0.5, tv: 0.5, tamp: 0, tsigma: 0.08 };
 
     const geo = pinGeometry(p, relief + 0.06, radial);
     const mesh = new THREE.InstancedMesh(geo, view.pinMaterial, N);
@@ -239,6 +241,12 @@ export class PinBoard {
     this.awake = Math.max(this.awake, 4);
   }
 
+  magnet(cu, cv, amp, sigma) {
+    const M = this.mag;
+    M.tu = cu; M.tv = cv; M.tamp = amp; M.tsigma = sigma;
+    this.awake = Math.max(this.awake, 1.2);
+  }
+
   step(dt) {
     if (this.awake <= 0) return false;
     this.time += dt;
@@ -249,11 +257,21 @@ export class PinBoard {
     const tn = 1 - Math.exp(-dt / 0.22);
     const rip = this.ripples;
     for (let r = rip.length - 1; r >= 0; r--) if (this.time - rip[r].t > 2.2) rip.splice(r, 1);
+    const M = this.mag;
+    const mf = 1 - Math.exp(-dt / 0.09), af = 1 - Math.exp(-dt / 0.2);
+    M.u += (M.tu - M.u) * mf; M.v += (M.tv - M.v) * mf;
+    M.amp += (M.tamp - M.amp) * af; M.sigma += (M.tsigma - M.sigma) * af;
+    const magOn = M.amp > 1e-3, inv2s2 = 1 / (2 * M.sigma * M.sigma);
     let moving = 0;
     for (let i = 0; i < N; i++) {
       if (this.time >= release[i]) target[i] = next[i];
       // a press pushes pins forward from behind, like a hand under the toy
       let T = Math.min(relief * 1.15, target[i] + dent[i] * relief * 0.6);
+      if (magOn) {
+        const mu = this.u[i] - M.u, mv = (this.v[i] - M.v) * this.aspect;
+        const d2 = mu * mu + mv * mv;
+        if (d2 < 9 * M.sigma * M.sigma) T = Math.min(relief * 1.35, T + M.amp * relief * Math.exp(-d2 * inv2s2));
+      }
       if (rip.length) {
         for (const R of rip) {
           const age = this.time - R.t;
@@ -270,7 +288,7 @@ export class PinBoard {
       tint[i] += (tintTarget[i] - tint[i]) * tn;
       if (Math.abs(vel[i]) > 2e-4 || Math.abs(T - height[i]) > 2e-4 || this.time < release[i]) moving++;
     }
-    if (moving > 0 || rip.length) this.awake = Math.max(this.awake, 0.4);
+    if (moving > 0 || rip.length || Math.abs(M.tamp - M.amp) > 1e-3) this.awake = Math.max(this.awake, 0.4);
     this.upload();
     return true;
   }
@@ -338,6 +356,7 @@ export class PinView {
     scene.add(this.board.group);
 
     this.tilt = { x: 0, y: 0, tx: 0, ty: 0, bx: 0.06, by: -0.2 };
+    this.lt = { x: 0, y: 0, tx: 0, ty: 0 }; // key light offset, follows the pointer
     this.raycaster = new THREE.Raycaster();
     this.plane = new THREE.Plane();
     this.dirty = true;
@@ -378,7 +397,7 @@ export class PinView {
   setDpr(d) { this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, d)); this.w = 0; this.resize(); }
 
   // pointer position in board uv (0..1), or null when off the board
-  uvAt(clientX, clientY) {
+  uvAt(clientX, clientY, anywhere = false) {
     const r = this.canvas.getBoundingClientRect();
     const ndc = new THREE.Vector2(((clientX - r.left) / r.width) * 2 - 1, -((clientY - r.top) / r.height) * 2 + 1);
     this.raycaster.setFromCamera(ndc, this.camera);
@@ -390,11 +409,13 @@ export class PinView {
     if (!this.raycaster.ray.intersectPlane(this.plane, hit)) return null;
     g.worldToLocal(hit);
     const u = hit.x + 0.5, v = (hit.y + this.board.extH / 2) / this.board.extH;
-    if (u < -0.05 || u > 1.05 || v < -0.05 || v > 1.05) return null;
+    if (!anywhere && (u < -0.05 || u > 1.05 || v < -0.05 || v > 1.05)) return null;
     return { u, v };
   }
 
   look(nx, ny) { this.tilt.tx = nx; this.tilt.ty = ny; this.dirty = true; }
+
+  light(nx, ny) { this.lt.tx = nx; this.lt.ty = ny; this.dirty = true; }
 
   update(dt) {
     const t = this.tilt;
@@ -404,8 +425,14 @@ export class PinView {
     const tiltMoved = Math.abs(t.x - px) + Math.abs(t.y - py) > 1e-5;
     const g = this.board.group;
     g.rotation.set(t.bx - t.y * 0.1, t.by + t.x * 0.16, 0);
+    const L = this.lt;
+    const lpx = L.x, lpy = L.y;
+    const la = 1 - Math.exp(-dt / 0.25);
+    L.x += (L.tx - L.x) * la; L.y += (L.ty - L.y) * la;
+    const lightMoved = Math.abs(L.x - lpx) + Math.abs(L.y - lpy) > 1e-5;
+    if (lightMoved) this.key.position.set(-0.55 + L.x * 0.95, 0.85 - L.y * 0.75, 1.4);
     const stepped = this.board.step(dt);
-    if (stepped || tiltMoved) this.dirty = true;
+    if (stepped || tiltMoved || lightMoved) this.dirty = true;
     return this.dirty;
   }
 
