@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Anwar Debes</title>
-<meta name="description" content="Anwar Debes builds AI that shows its work: Tsetlin Machines whose decisions are logical clauses you can read and check. MSc in AI at the University of Agder, CFO at SafeMediAI.">
+<meta name="description" content="Anwar Debes builds AI that shows its work: Tsetlin Machines whose decisions are logical clauses you can read and check, game-playing agents, data systems and apps that run in your browser. MSc in AI at the University of Agder, CFO at SafeMediAI.">
 <meta name="author" content="Anwar Debes">
 <meta name="theme-color" content="#E3E7E5" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#121816" media="(prefers-color-scheme: dark)">
@@ -15,7 +15,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Anwar Debes">
 <meta property="og:title" content="Anwar Debes: AI that shows its work">
-<meta property="og:description" content="Tsetlin Machines, interpretable AI and AI safety. Press the pins, then try to sneak a prompt past my guardrail.">
+<meta property="og:description" content="Interpretable AI, AI safety, reinforcement learning and things that run in your browser. Press the pins, then try to sneak a prompt past my guardrail.">
 <meta property="og:url" content="https://anwardebes.github.io/">
 <meta property="og:image" content="https://anwardebes.github.io/og.png">
 <meta property="og:image:width" content="1200">
@@ -40,7 +40,7 @@
   "alumniOf": { "@type": "CollegeOrUniversity", "name": "NTNU" },
   "award": "Eurekaprisen 2025, NTNU",
   "address": { "@type": "PostalAddress", "addressLocality": "Grimstad", "addressCountry": "NO" },
-  "knowsAbout": ["Tsetlin Machines", "Interpretable machine learning", "AI safety", "Formal verification", "Natural language processing"],
+  "knowsAbout": ["Tsetlin Machines", "Interpretable machine learning", "AI safety", "Formal verification", "Reinforcement learning", "Monte Carlo tree search", "Data engineering", "Web applications"],
   "sameAs": ["https://github.com/AnwarDebes"]
 }
 </script>
@@ -61,7 +61,8 @@
       <a href="#work">Work</a>
       <a href="#demo">Demo</a>
       <a href="#papers" class="opt">Papers</a>
-      <a href="#about">About</a>
+      <a href="#about" class="opt-xs">About</a>
+      <a href="cv/">CV</a>
       <button class="theme-toggle" type="button" aria-label="Switch colour theme">Dark</button>
     </nav>
   </div>
@@ -73,7 +74,7 @@
       <div class="hero-text">
         <h1 id="hero-title">AI that shows its work.</h1>
         <p class="intro">I’m Anwar Debes. I research Tsetlin Machines at CAIR, University of Agder: models whose every decision is a set of logical clauses you can read, check and argue with.</p>
-        <p class="intro">I’m also CFO at SafeMediAI, and in 2025 my bachelor thesis team at NTNU won the Eurekaprisen.</p>
+        <p class="intro">Outside the lab I build game-playing agents, data warehouses and apps that run entirely in your browser. I’m also CFO at SafeMediAI, and in 2025 my bachelor thesis team at NTNU won the Eurekaprisen.</p>
       </div>
       <div class="hero-board">
         <div class="board-slot" id="hero-slot" role="img" aria-label="A portrait of Anwar Debes pressed into a board of steel pins. Move the pointer over it to press the pins.">
@@ -120,7 +121,7 @@
   <section class="block" id="work" aria-labelledby="work-title">
     <div class="wrap">
       <h2 id="work-title">Selected work</h2>
-      <p class="lead">The projects that matter most to my research, most important first. Each comes with a paper or a measured result you can rerun, including the parts that did not work.</p>
+      <p class="lead">Research first, then things I built for people to use. Each one comes with a paper, a measured result you can rerun or a live app you can open, including the parts that did not work.</p>
       <div class="work-grid">
         <aside class="work-aside" aria-label="Project picture">
           <div class="work-sticky">
@@ -133,67 +134,119 @@
             <p class="emblem-caption" id="emblem-caption">glassbox-lm: a glass box with one clause inside.</p>
           </div>
         </aside>
-        <ol class="work-list" id="work-list">
-          <li class="work-item" data-emblem="glassbox" tabindex="-1">
-            <h3><a href="https://github.com/AnwarDebes/glassbox-lm">glassbox-lm</a></h3>
-            <p>My master’s research: steps toward a language model whose knowledge is a set of readable Tsetlin Machine clauses.</p>
-            <p class="result">Three studies so far. The first registered 91 hypotheses before a single run, and the write-up leads with what did not work.</p>
-            <div class="links"><a href="https://github.com/AnwarDebes/glassbox-lm">Code</a><a href="universe/#glassbox">See it in the research map</a></div>
-          </li>
-          <li class="work-item" data-emblem="candor" tabindex="-1">
-            <h3><a href="https://github.com/AnwarDebes/candor">CANDOR</a></h3>
-            <p>Interpretability by construction. A layer’s computation runs through named concepts, and every forward pass emits a certificate anyone can re-check.</p>
-            <p class="result">On synthetic ground truth: δ ≈ 0.002 with no measurable accuracy cost, and backdoor detection at AUC ≈ 0.90.</p>
-            <div class="links"><a href="https://github.com/AnwarDebes/candor/blob/main/paper/candor.pdf">Paper</a><a href="https://github.com/AnwarDebes/candor">Code</a></div>
-          </li>
-          <li class="work-item" data-emblem="trace" tabindex="-1">
-            <h3><a href="https://github.com/AnwarDebes/TRACE">TRACE</a></h3>
-            <p>A CPU-only guardrail for AI agents: readable content clauses, bounded-memory temporal monitors and a tamper-evident certificate ledger that can be verified without the model.</p>
-            <p class="result">F1 0.827 on deepset/prompt-injections at 107 µs per check, in 12.5 KiB. It is the one you just tried to fool.</p>
-            <div class="links"><a href="https://github.com/AnwarDebes/TRACE/blob/main/paper/trace.pdf">Paper</a><a href="https://github.com/AnwarDebes/TRACE">Code</a></div>
-          </li>
-          <li class="work-item" data-emblem="veritas" tabindex="-1">
-            <h3><a href="https://github.com/AnwarDebes/veritas">VERITAS</a></h3>
-            <p>A guardrail whose safety properties are proved or refuted by SAT and SMT solvers, with bypasses repaired by construction.</p>
-            <p class="result">Retraining stalls at 8 provable bypasses. Constructive repair reaches 0, and accuracy goes from 0.69 to 0.71.</p>
-            <div class="links"><a href="https://github.com/AnwarDebes/veritas/blob/main/paper/veritas.pdf">Paper</a><a href="https://github.com/AnwarDebes/veritas">Code</a></div>
-          </li>
-          <li class="work-item" data-emblem="lucid" tabindex="-1">
-            <h3><a href="https://github.com/AnwarDebes/lucid">LUCID</a></h3>
-            <p>A glass-box, safety-shielded agent for ARC-AGI-3, with a readable world model and a decision trace for every step. It runs on a CPU.</p>
-            <p class="result">It completes 2 public levels (VC33 and LP85). Its overall score is in the same sub-1% range as frontier models, and the README says so.</p>
-            <div class="links"><a href="https://github.com/AnwarDebes/lucid/blob/main/paper/lucid.pdf">Paper</a><a href="https://github.com/AnwarDebes/lucid">Code</a></div>
-          </li>
-          <li class="work-item" data-emblem="graphtm" tabindex="-1">
-            <h3><a href="https://github.com/AnwarDebes/graphtm-cbr">graphtm-cbr</a></h3>
-            <p>A graph-walking Tsetlin Machine for Ames mutagenicity that explains each prediction and proposes the smallest valid edit to the molecule.</p>
-            <p class="result">Recourse succeeds for 95.5% of positives (191 of 200). Its AUROC of 0.685 trails a fingerprint baseline, and is reported anyway.</p>
-            <div class="links"><a href="https://github.com/AnwarDebes/graphtm-cbr">Code</a></div>
-          </li>
-          <li class="work-item" data-emblem="vsclaude" tabindex="-1">
-            <h3><a href="https://github.com/AnwarDebes/vsclaude">vsclaude</a></h3>
-            <p>A desktop IDE where you watch your AI coding agent work. Pixie, a pixel-art companion, acts out what the agent is really doing: reading, typing, searching, debugging.</p>
-            <p class="result">House rule: every animation is bound to a real event. In beta, built with Tauri, React and TypeScript, with one event pipeline designed for several coding agents and local models.</p>
-            <div class="links"><a href="https://github.com/AnwarDebes/vsclaude">Code</a><a href="universe/#vsc">See it in the research map</a></div>
-          </li>
-        </ol>
+        <div class="work-list" id="work-list">
+          <h3 class="work-group">Research</h3>
+          <ol class="work-items">
+            <li class="work-item" id="glassbox" data-emblem="glassbox" tabindex="-1">
+              <h3><a href="https://github.com/AnwarDebes/glassbox-lm">glassbox-lm</a></h3>
+              <p>My master’s research: steps toward a language model whose knowledge is a set of readable Tsetlin Machine clauses.</p>
+              <p class="result">Three studies so far. The first registered 91 hypotheses before a single run, and the write-up leads with what did not work.</p>
+              <div class="links"><a href="https://github.com/AnwarDebes/glassbox-lm">Code</a><a href="universe/#glassbox">See it in the research map</a></div>
+            </li>
+            <li class="work-item" id="candor" data-emblem="candor" tabindex="-1">
+              <h3><a href="https://github.com/AnwarDebes/candor">CANDOR</a></h3>
+              <p>Interpretability by construction. A layer’s computation runs through named concepts, and every forward pass emits a certificate anyone can re-check.</p>
+              <p class="result">On synthetic ground truth: δ ≈ 0.002 with no measurable accuracy cost, and backdoor detection at AUC ≈ 0.90.</p>
+              <div class="links"><a href="https://github.com/AnwarDebes/candor/blob/main/paper/candor.pdf">Paper</a><a href="https://github.com/AnwarDebes/candor">Code</a></div>
+            </li>
+            <li class="work-item" id="trace" data-emblem="trace" tabindex="-1">
+              <h3><a href="https://github.com/AnwarDebes/TRACE">TRACE</a></h3>
+              <p>A CPU-only guardrail for AI agents: readable content clauses, bounded-memory temporal monitors and a tamper-evident certificate ledger that can be verified without the model.</p>
+              <p class="result">F1 0.827 on deepset/prompt-injections at 107 µs per check, in 12.5 KiB. It is the one you just tried to fool.</p>
+              <div class="links"><a href="https://github.com/AnwarDebes/TRACE/blob/main/paper/trace.pdf">Paper</a><a href="https://github.com/AnwarDebes/TRACE">Code</a></div>
+            </li>
+            <li class="work-item" id="veritas" data-emblem="veritas" tabindex="-1">
+              <h3><a href="https://github.com/AnwarDebes/veritas">VERITAS</a></h3>
+              <p>A guardrail whose safety properties are proved or refuted by SAT and SMT solvers, with bypasses repaired by construction.</p>
+              <p class="result">Retraining stalls at 8 provable bypasses. Constructive repair reaches 0, and accuracy goes from 0.69 to 0.71.</p>
+              <div class="links"><a href="https://github.com/AnwarDebes/veritas/blob/main/paper/veritas.pdf">Paper</a><a href="https://github.com/AnwarDebes/veritas">Code</a></div>
+            </li>
+            <li class="work-item" id="lucid" data-emblem="lucid" tabindex="-1">
+              <h3><a href="https://github.com/AnwarDebes/lucid">LUCID</a></h3>
+              <p>A glass-box, safety-shielded agent for ARC-AGI-3, with a readable world model and a decision trace for every step. It runs on a CPU.</p>
+              <p class="result">It completes 2 public levels (VC33 and LP85). Its overall score is in the same sub-1% range as frontier models, and the README says so.</p>
+              <div class="links"><a href="https://github.com/AnwarDebes/lucid/blob/main/paper/lucid.pdf">Paper</a><a href="https://github.com/AnwarDebes/lucid">Code</a></div>
+            </li>
+            <li class="work-item" id="graphtm" data-emblem="graphtm" tabindex="-1">
+              <h3><a href="https://github.com/AnwarDebes/graphtm-cbr">graphtm-cbr</a></h3>
+              <p>A graph-walking Tsetlin Machine for Ames mutagenicity that explains each prediction and proposes the smallest valid edit to the molecule.</p>
+              <p class="result">Recourse succeeds for 95.5% of positives (191 of 200). Its AUROC of 0.685 trails a fingerprint baseline, and is reported anyway.</p>
+              <div class="links"><a href="https://github.com/AnwarDebes/graphtm-cbr">Code</a></div>
+            </li>
+            <li class="work-item" id="nexus" data-emblem="nexus" tabindex="-1">
+              <h3><a href="https://github.com/AnwarDebes/RL-CCA">NEXUS</a></h3>
+              <p>An AlphaZero-style agent for Chinese Checkers with two to six players: a 7.5M-parameter convolution and transformer network, Gumbel MCTS on a 0.45-second budget per move, and a rule-exact copy of the tournament server for self-play.</p>
+              <p class="result">Three research prototypes run on it: coalition-aware search with a Plackett-Luce rank value, per-component values mixed inside the tree, and a network that is exactly equivariant to board rotations and seat swaps. 324 tests pass on every push.</p>
+              <div class="links"><a href="https://github.com/AnwarDebes/RL-CCA">Code</a><a href="https://github.com/AnwarDebes/RL-CCA/tree/main/flagship_coalition_mcts">Coalition-aware search</a></div>
+            </li>
+          </ol>
+          <h3 class="work-group">Engineering</h3>
+          <ol class="work-items">
+            <li class="work-item" id="pocketos" data-emblem="pocketos" tabindex="-1">
+              <h3><a href="https://anwardebes.github.io/PocketOS/">PocketOS</a></h3>
+              <p>A desktop that runs in a phone’s browser: draggable, snapping windows, a virtual filesystem in IndexedDB, a terminal and a Monaco code editor, all on the client.</p>
+              <p class="result">Installable and offline. On a narrow screen apps open full screen with an app switcher; give it room and the windows come back.</p>
+              <div class="links"><a href="https://anwardebes.github.io/PocketOS/">Open the live demo</a><a href="https://github.com/AnwarDebes/PocketOS">Code</a></div>
+            </li>
+            <li class="work-item" id="sleeparchitect" data-emblem="sleep" tabindex="-1">
+              <h3><a href="https://anwardebes.github.io/SleepArchitect/">SleepArchitect</a></h3>
+              <p>Predicts tonight’s sleep before you go to bed. It runs Borbély’s two-process model with the effects of caffeine, alcohol, exercise, light and meal timing, then ranks what to change.</p>
+              <p class="result">It reproduces all 11 published findings it was checked against. The whole app is 18.7 KB gzipped and sends nothing anywhere.</p>
+              <div class="links"><a href="https://anwardebes.github.io/SleepArchitect/">Open the app</a><a href="https://github.com/AnwarDebes/SleepArchitect/blob/main/paper/sleeparchitect.pdf">Paper</a><a href="https://github.com/AnwarDebes/SleepArchitect">Code</a></div>
+            </li>
+            <li class="work-item" id="idm" data-emblem="idm" tabindex="-1">
+              <h3><a href="https://github.com/AnwarDebes/IDM">IDM</a></h3>
+              <p>An epidemiological data warehouse built three ways on the same 473,189 weekly disease reports from 1916 to 2011: a PostgreSQL star schema, MongoDB buckets and a Neo4j graph, behind one FastAPI layer and a React dashboard.</p>
+              <p class="result">Kafka and ksqlDB stream new reports in, validate them and raise alerts, and 13 decision-support queries run on all three back ends side by side.</p>
+              <div class="links"><a href="https://github.com/AnwarDebes/IDM">Code</a></div>
+            </li>
+            <li class="work-item" id="thermoguard" data-emblem="thermo" tabindex="-1">
+              <h3><a href="https://github.com/AnwarDebes/ThermoGuard">ThermoGuard</a></h3>
+              <p>Heatwave deaths happen indoors. ThermoGuard forecasts indoor heat home by home with a physics model of each building plus a learned correction, then decides who gets help first.</p>
+              <p class="result">In a simulated replay of the 2021 Pacific Northwest heatwave, a top-floor care home peaks at 52 °C. An equity floor lifts the worst-covered group from 0% to 11% coverage, at a cost in total lives saved that the report spells out.</p>
+              <div class="links"><a href="https://github.com/AnwarDebes/ThermoGuard/blob/main/paper/thermoguard.pdf">Report</a><a href="https://github.com/AnwarDebes/ThermoGuard">Code</a></div>
+            </li>
+            <li class="work-item" id="mneme" data-emblem="mneme" tabindex="-1">
+              <h3><a href="https://github.com/AnwarDebes/Mneme-Education-Ecosystem">Mneme</a></h3>
+              <p>Turns a textbook into an Anki deck with a local model, so your notes never leave your machine. Every card says why it is easy or hard, optionally through a Tsetlin Machine.</p>
+              <p class="result">156 tests pass without a GPU, Ollama or Anki. The quality benchmark has not been run yet, and the README says so.</p>
+              <div class="links"><a href="https://mneme-education-ecosystem.vercel.app">Website</a><a href="https://github.com/AnwarDebes/Mneme-Education-Ecosystem">Code</a></div>
+            </li>
+            <li class="work-item" id="vsclaude" data-emblem="vsclaude" tabindex="-1">
+              <h3><a href="https://github.com/AnwarDebes/vsclaude">vsclaude</a></h3>
+              <p>A desktop IDE where you watch your AI coding agent work. Pixie, a pixel-art companion, acts out what the agent is really doing: reading, typing, searching, debugging.</p>
+              <p class="result">House rule: every animation is bound to a real event. In beta, built with Tauri, React and TypeScript, with one event pipeline designed for several coding agents and local models.</p>
+              <div class="links"><a href="https://github.com/AnwarDebes/vsclaude">Code</a><a href="universe/#vsc">See it in the research map</a></div>
+            </li>
+          </ol>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="block" id="explore" aria-labelledby="explore-title">
     <div class="wrap">
-      <h2 id="explore-title">Two more things to play with</h2>
+      <h2 id="explore-title">Four more things to try</h2>
       <div class="explore-grid">
         <div class="explore-item">
           <a class="shot" href="universe/" aria-label="Open the research map"><img src="assets/img/universe.webp" alt="A 3D map of research projects grouped into seven research lines" width="1200" height="750" loading="lazy"></a>
           <h3><a href="universe/">Research map</a></h3>
-          <p>All 39 public projects as a 3D map you can orbit, search and tour, grouped into seven lines of research.</p>
+          <p>All 40 public projects as a 3D map you can orbit, search and tour, grouped into seven lines of research.</p>
         </div>
         <div class="explore-item">
           <a class="shot" href="tm/" aria-label="Open the Tsetlin Machine demo"><img src="assets/img/tm.webp" alt="A Tsetlin Machine learning noisy XOR, shown as bars of automaton states" width="1200" height="750" loading="lazy"></a>
           <h3><a href="tm/">Watch a Tsetlin Machine learn</a></h3>
           <p>Train one on noisy XOR in your browser, watch its automata vote, then ask it to explain a prediction in plain logic.</p>
+        </div>
+        <div class="explore-item">
+          <a class="shot" href="https://anwardebes.github.io/PocketOS/" aria-label="Open PocketOS"><img src="assets/img/pocketos.webp" alt="PocketOS with a file manager, a terminal and a notes app open as windows" width="1200" height="750" loading="lazy"></a>
+          <h3><a href="https://anwardebes.github.io/PocketOS/">PocketOS</a></h3>
+          <p>A whole desktop in a browser tab. Open it on your phone, install it, and it keeps working offline.</p>
+        </div>
+        <div class="explore-item">
+          <a class="shot" href="https://anwardebes.github.io/SleepArchitect/" aria-label="Open SleepArchitect"><img src="assets/img/sleep.webp" alt="SleepArchitect’s 24-hour clock with a predicted sleep window from 23:22 to 07:00" width="1200" height="750" loading="lazy"></a>
+          <h3><a href="https://anwardebes.github.io/SleepArchitect/">SleepArchitect</a></h3>
+          <p>Enter today’s coffee, drinks, training and light, and see tonight’s predicted sleep on a 24-hour clock.</p>
         </div>
       </div>
     </div>
@@ -202,7 +255,7 @@
   <section class="block" id="papers" aria-labelledby="papers-title">
     <div class="wrap">
       <h2 id="papers-title">Papers and reports</h2>
-      <p class="lead">Every PDF sits next to the code that produced its numbers.</p>
+      <p class="lead">Every PDF sits next to the code that produced its numbers. All of them are also in one <a href="papers.bib">BibTeX file</a>.</p>
       <ul class="papers">
         <li><a class="title" href="https://github.com/AnwarDebes/candor/blob/main/paper/candor.pdf">The Explanation Is the Forward Pass: Interpretability by Construction with Certified Legible Bottlenecks</a><span class="src">CANDOR</span></li>
         <li><a class="title" href="https://github.com/AnwarDebes/TRACE/blob/main/paper/trace.pdf">A Tsetlin Runtime Assurance and Certification Engine for Interpretable, Tamper-Evident Guardrails on Agentic AI</a><span class="src">TRACE</span></li>
@@ -211,8 +264,10 @@
         <li><a class="title" href="https://github.com/AnwarDebes/reins/blob/main/paper/reins.pdf">Model-Free, Certifying Least-Cost Repair of LLM-Agent Tool-Call Trajectories</a><span class="src">REINS</span></li>
         <li><a class="title" href="https://github.com/AnwarDebes/lucid/blob/main/paper/lucid.pdf">A Glass-Box, Safety-Shielded Agent for Open-World Interactive Reasoning on ARC-AGI-3</a><span class="src">LUCID</span></li>
         <li><a class="title" href="https://github.com/AnwarDebes/DiTM/blob/main/paper/ditm.pdf">A Discrete-Diffusion Tsetlin Machine for Interpretable Generative Modelling of Tabular Boolean Data</a><span class="src">DiTM</span></li>
-        <li><a class="title" href="https://github.com/AnwarDebes/Multi-HGTM/blob/main/paper/multihgtm.pdf">A Multi-View Hierarchical Graph Tsetlin Machine</a><span class="src">Multi-HGTM</span></li>
+        <li><a class="title" href="https://github.com/AnwarDebes/Multi-HGTM/blob/main/paper/multihgtm.pdf">Multi-HGTM: Cross-View Conjunctive Fusion for the Graph Tsetlin Machine</a><span class="src">Multi-HGTM</span></li>
         <li><a class="title" href="https://github.com/AnwarDebes/Clause-Driven-LLM/blob/main/paper/report.pdf">An Interpretable Tsetlin Machine Control Layer for LLM Agent Routing and Escalation</a><span class="src">Clause-Driven-LLM</span></li>
+        <li><a class="title" href="https://github.com/AnwarDebes/SleepArchitect/blob/main/paper/sleeparchitect.pdf">SleepArchitect: A free, no-login predictive sleep model from caffeine, alcohol, exercise, light, and chronotype</a><span class="src">SleepArchitect</span></li>
+        <li><a class="title" href="https://github.com/AnwarDebes/ThermoGuard/blob/main/paper/thermoguard.pdf">ThermoGuard: Real-Time Indoor Heat Risk Forecasting for Vulnerable Housing under Extreme Heat Events</a><span class="src">ThermoGuard</span></li>
         <li><span class="title">Conformal, federated, robust and counterfactual Tsetlin Machines</span><span class="src"><a href="https://github.com/AnwarDebes/ConfTM/blob/main/paper/conftm.pdf">ConfTM</a>, <a href="https://github.com/AnwarDebes/FedTM/blob/main/paper/fedtm.pdf">FedTM</a>, <a href="https://github.com/AnwarDebes/RobTM/blob/main/paper/robtm.pdf">RobTM</a> and <a href="https://github.com/AnwarDebes/CCTM/blob/main/paper/cctm.pdf">CCTM</a></span></li>
       </ul>
     </div>
@@ -225,11 +280,11 @@
         <div class="about-text">
           <p>I’m a master’s student in artificial intelligence at the University of Agder in Grimstad, doing my research at <a href="https://cair.uia.no">CAIR</a> under Ole-Christoffer Granmo, who introduced the Tsetlin Machine.</p>
           <p>Before that I took a bachelor’s in computer engineering, cybersecurity and programming, at NTNU Gjøvik. Our thesis, <a href="https://hdl.handle.net/11250/3203861">Automatic Removal of Sensitive Content in Images and Documents for Efficient Archiving</a>, written with Rami Amer and Yasin Hessnawi for Mattilsynet, won the <a href="https://nyheter.ntnu.no/disse-har-vunnet-eurekaprisen-2025/#:~:text=Automatic%20Removal%20of%20Sensitive%20Content,Yasin%20Hessnawi">Eurekaprisen 2025</a> for the best bachelor thesis at the Faculty of Information Technology and Electrical Engineering.</p>
-          <p>I’m CFO at <a href="https://safemediai.com">SafeMediAI</a>, the Norwegian startup behind <a href="https://declassifai.com">DeclassifAI</a>. After hours I build things like <a href="https://github.com/AnwarDebes/PocketOS">PocketOS</a>, a whole desktop inside your phone’s browser, and <a href="https://github.com/AnwarDebes/Mneme-Education-Ecosystem">Mneme</a>, which turns a textbook into an Anki deck on local models.</p>
+          <p>I’m CFO at <a href="https://safemediai.com">SafeMediAI</a>, the Norwegian startup behind <a href="https://declassifai.com">DeclassifAI</a>. After hours I build things like <a href="#pocketos">PocketOS</a>, a whole desktop inside your phone’s browser, and <a href="#sleeparchitect">SleepArchitect</a>, which predicts tonight’s sleep. The short version of all this is on <a href="cv/">one page</a>.</p>
         </div>
         <dl class="facts">
           <dt>Studying</dt><dd>MSc in Artificial Intelligence, University of Agder</dd>
-          <dt>Research</dt><dd>Tsetlin Machines, interpretability, AI safety and verification</dd>
+          <dt>Research</dt><dd>Tsetlin Machines, interpretability, AI safety and verification, reinforcement learning</dd>
           <dt>Working</dt><dd>CFO, SafeMediAI</dd>
           <dt>Recognition</dt><dd>Eurekaprisen 2025, NTNU</dd>
           <dt>Based in</dt><dd>Grimstad, Norway</dd>
