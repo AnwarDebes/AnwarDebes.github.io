@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Research Universe · Anwar Debes</title>
+<meta name="description" content="Fly through 39 public research projects by Anwar Debes in interactive 3D: interpretable AI, Tsetlin Machines, verifiable guardrails for AI agents, language models and more. Every star is a repository.">
+<link rel="canonical" href="https://anwardebes.github.io/universe/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Research Universe · Anwar Debes">
+<meta property="og:description" content="39 projects, 7 research lines, 0 black boxes. Drag to orbit, click any star.">
+<meta property="og:url" content="https://anwardebes.github.io/universe/">
+<meta property="og:image" content="https://anwardebes.github.io/universe/og.png">
+<meta property="og:image:width" content="1280">
+<meta property="og:image:height" content="640">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://anwardebes.github.io/universe/og.png">
+<meta name="theme-color" content="#060a14">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#060a14;--line:#1e293b;--line2:#334155;--text:#e2e8f0;--muted:#94a3b8;--dim:#64748b;--cyan:#67e8f9;--violet:#a78bfa;--pink:#f0abfc}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font:400 15px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden}
+a{color:var(--cyan);text-decoration:none}
+a:hover{text-decoration:underline}
+.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+#gl{position:fixed;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none}
+#gl:active{cursor:grabbing}
+#labels{position:fixed;inset:0;pointer-events:none}
+.label{pointer-events:auto;cursor:pointer;padding:2px 8px;border-radius:999px;font:500 12px Inter,sans-serif;color:#e2e8f0;white-space:nowrap;
+ background:rgba(6,10,20,.55);border:1px solid rgba(148,163,184,.18);backdrop-filter:blur(4px);opacity:0;transition:opacity .35s,border-color .25s}
+.label.show{opacity:1}
+.label.imp3{font:600 13.5px "Space Grotesk",Inter,sans-serif;border-color:color-mix(in srgb,var(--c) 55%,transparent);box-shadow:0 0 18px -6px var(--c)}
+.label.hot{border-color:var(--c);color:#fff}
+.clabel{pointer-events:none;font:600 11px Inter,sans-serif;letter-spacing:2.4px;text-transform:uppercase;color:var(--c);opacity:.0;transition:opacity .6s;text-shadow:0 0 18px rgba(0,0,0,.9)}
+.clabel.show{opacity:.72}
+.ui{position:fixed;z-index:5}
+.top{top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:18px clamp(14px,3vw,30px);pointer-events:none}
+.top>*{pointer-events:auto}
+.brand a{color:var(--muted);font-size:13px}
+.brand h1{margin:6px 0 2px;font:700 clamp(24px,3.2vw,34px)/1.05 "Space Grotesk",Inter,sans-serif;letter-spacing:-.6px;
+ background:linear-gradient(90deg,#a5f3fc,#a78bfa 55%,#f0abfc);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand p{margin:0;color:var(--muted);font-size:13.5px}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.tools input{width:220px;max-width:46vw;padding:9px 12px;border-radius:10px;border:1px solid var(--line2);background:rgba(11,18,34,.75);color:var(--text);font:500 13.5px Inter,sans-serif;outline:none}
+.tools input:focus{border-color:var(--violet)}
+.btn{padding:9px 14px;border-radius:10px;border:1px solid var(--line2);background:rgba(11,18,34,.75);color:var(--text);font:600 13px Inter,sans-serif;cursor:pointer}
+.btn:hover{border-color:var(--violet)}
+.btn.primary{background:linear-gradient(90deg,#22d3ee,#8b5cf6);border:0;color:#050816}
+.chips{bottom:16px;left:50%;transform:translateX(-50%);display:flex;flex-wrap:wrap;justify-content:center;gap:8px;width:min(1100px,calc(100vw - 24px));padding:4px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;border:1px solid var(--line2);background:rgba(11,18,34,.78);color:var(--text);font:500 12.5px Inter,sans-serif;cursor:pointer;user-select:none;transition:opacity .2s,border-color .2s}
+.chip i{width:8px;height:8px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c)}
+.chip b{color:var(--dim);font-weight:500}
+.chip.off{opacity:.38}
+.chip:hover{border-color:var(--c)}
+.hint{left:clamp(14px,3vw,30px);bottom:104px;color:var(--dim);font-size:12px}
+.tourchip{left:50%;top:84px;transform:translateX(-50%);padding:7px 14px;border-radius:999px;background:rgba(11,18,34,.85);border:1px solid var(--violet);font-size:12.5px;color:var(--text);display:none}
+.panel{right:16px;top:96px;width:min(380px,calc(100vw - 32px));max-height:calc(100vh - 190px);overflow:auto;padding:20px 20px 16px;border-radius:18px;
+ border:1px solid var(--line2);background:linear-gradient(180deg,rgba(15,23,42,.92),rgba(11,18,34,.86));backdrop-filter:blur(10px);
+ transform:translateX(calc(100% + 30px));transition:transform .45s cubic-bezier(.2,.8,.2,1);box-shadow:0 24px 60px -20px rgba(0,0,0,.8)}
+.panel.open{transform:none}
+.panel .x{position:absolute;right:12px;top:10px;background:none;border:0;color:var(--muted);font-size:22px;cursor:pointer}
+.panel .cl{display:flex;align-items:center;gap:8px;font:600 11px Inter,sans-serif;letter-spacing:1.6px;text-transform:uppercase;color:var(--c)}
+.panel .cl i{width:8px;height:8px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c)}
+.panel h2{margin:8px 0 8px;font:700 26px/1.1 "Space Grotesk",Inter,sans-serif;letter-spacing:-.4px;word-break:break-word}
+.panel p{margin:0;color:#cbd5e1}
+.meas{margin-top:14px;padding:12px 14px;border-radius:12px;border:1px dashed var(--line2);background:rgba(6,10,20,.45)}
+.meas b{display:block;font:600 11px Inter,sans-serif;letter-spacing:1.4px;text-transform:uppercase;color:#5eead4;margin-bottom:4px}
+.links{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.links a{padding:9px 13px;border-radius:10px;border:1px solid var(--line2);background:rgba(6,10,20,.4);font:600 13px Inter,sans-serif;color:var(--text)}
+.links a.main{background:linear-gradient(90deg,#22d3ee,#8b5cf6);border:0;color:#050816}
+.links a:hover{text-decoration:none;filter:brightness(1.1)}
+.nb{margin-top:14px;font-size:12.5px;color:var(--dim)}
+.nb div{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.nb span.n{cursor:pointer;padding:4px 9px;border-radius:999px;border:1px solid var(--line2);color:var(--text);font-size:12px}
+.nb span.n:hover{border-color:var(--violet)}
+#loader{position:fixed;inset:0;z-index:20;display:grid;place-items:center;background:var(--bg);transition:opacity .8s}
+#loader.done{opacity:0;pointer-events:none}
+#loader p{color:var(--muted);font-size:13px}
+#toast{left:50%;top:50%;transform:translate(-50%,-50%);padding:14px 18px;border-radius:14px;background:rgba(0,0,0,.9);border:1px solid var(--line2);color:var(--text);display:none;text-align:center;max-width:340px}
+#list{inset:0;z-index:15;overflow:auto;background:rgba(6,10,20,.96);padding:80px clamp(16px,5vw,60px) 60px;display:none}
+#list.open{display:block}
+#list h2{font:700 30px "Space Grotesk",Inter,sans-serif;margin:0 0 6px}
+#list h3{margin:30px 0 10px;font:600 12px Inter,sans-serif;letter-spacing:2px;text-transform:uppercase}
+#list .item{padding:12px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:240px 1fr;gap:16px}
+#list .item p{margin:0;color:#cbd5e1}
+#list .item small{display:block;color:var(--muted);margin-top:4px}
+#list .close{position:fixed;right:24px;top:20px}
+@media (max-width:760px){
+ .chips{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scrollbar-width:none}
+ .tools input{width:150px}
+ .panel{top:auto;bottom:70px;right:12px;left:12px;width:auto;max-height:48vh;transform:translateY(calc(100% + 90px))}
+ .panel.open{transform:none}
+ .hint{display:none}
+ #list .item{grid-template-columns:1fr;gap:4px}
+ .brand p{display:none}
+}
+</style>
+</head>
+<body>
+<canvas id="gl" aria-label="Interactive 3D map of research projects"></canvas>
+<div id="labels"></div>
+
+<div class="ui top">
+  <div class="brand">
+    <a href="../">← anwardebes.github.io</a>
+    <h1>Research Universe</h1>
+    <p>39 public projects · 7 research lines · 0 black boxes</p>
+  </div>
+  <div class="tools">
+    <input id="search" list="names" placeholder="Find a project…" aria-label="Find a project" autocomplete="off">
+    <datalist id="names"></datalist>
+    <button class="btn primary" id="tour">Take the tour</button>
+    <button class="btn" id="listbtn">List view</button>
+  </div>
+</div>
+<div class="ui tourchip mono" id="tourchip"></div>
+<div class="ui chips" id="chips"></div>
+<div class="ui hint mono">drag to orbit · scroll to zoom · click any star · press b for a surprise</div>
+<aside class="ui panel" id="panel" aria-live="polite">
+  <button class="x" id="close" aria-label="Close">×</button>
+  <div class="cl" id="p-cl"><i></i><span></span></div>
+  <h2 id="p-name"></h2>
+  <p id="p-desc"></p>
+  <div class="meas" id="p-measbox"><b>Measured</b><p id="p-meas"></p></div>
+  <div class="links" id="p-links"></div>
+  <div class="nb" id="p-nbbox"><span>Connected to</span><div id="p-nb"></div></div>
+</aside>
+<div class="ui" id="toast"></div>
+<div id="loader"><p class="mono">booting the universe · compiling clauses · asking the black boxes to leave…</p></div>
+
+<section class="ui" id="list" aria-label="All projects as a list">
+  <button class="btn close" id="listclose">Back to 3D</button>
+  <h2>All 39 projects</h2>
+  <p style="color:var(--muted)">The same universe, flattened for reading. Every project is open source on GitHub.</p>
+  <h3 style="color:#67e8f9">Language models</h3>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/glassbox-lm" target="_blank" rel="noopener"><b>glassbox-lm</b></a></div><div><p>Measured steps toward a language model whose knowledge is a set of readable Tsetlin Machine clauses. Master&#x27;s research at CAIR, University of Agder.</p><small>Three studies so far; the first alone registered 91 hypotheses before the runs. Results are reported as measured, and most of them are negative.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/Clause-Driven-LLM" target="_blank" rel="noopener"><b>Clause-Driven-LLM</b></a> · <a href="https://github.com/AnwarDebes/Clause-Driven-LLM/blob/main/paper/report.pdf" target="_blank" rel="noopener">paper</a></div><div><p>Clause-based routing for LLM agents over frozen embeddings. Low-margin queries go to a human, and every decision comes with a SAT-checkable receipt.</p><small>94.2% routing accuracy on CLINC150 (logistic regression: 95.6%).</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/tm-llm-robustness-benchmark" target="_blank" rel="noopener"><b>tm-llm-robustness-benchmark</b></a></div><div><p>One robustness harness for Tsetlin Machines and transformers, with adversarial attacks and counterfactual data.</p><small>Honest negative: on counterfactual IMDb the Tsetlin Machine loses about 27 points, BERT about 2.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/attention-distilled-graphtm" target="_blank" rel="noopener"><b>attention-distilled-graphtm</b></a></div><div><p>BERT lends its attention edges as the graph, then gets uninstalled. A Graph Tsetlin Machine learns Boolean clauses on top.</p><small>94.77% mean accuracy on R8 over 5 seeds (the BERT teacher: about 98%).</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/subword-dep-graphtm" target="_blank" rel="noopener"><b>subword-dep-graphtm</b></a></div><div><p>Subword and dependency graphs for text classification with a Graph Tsetlin Machine.</p><small>95.05% mean accuracy on R8 over 5 seeds.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/decoder-attention-distill-graphtm" target="_blank" rel="noopener"><b>decoder-attention-distill-graphtm</b></a></div><div><p>Attention from a decoder LLM (Qwen2.5-1.5B) as the graph structure for a Graph Tsetlin Machine.</p><small>94.53% mean on R8. Work in progress; the differences between teachers are not significant.</small></div></div>
+  <h3 style="color:#818cf8">Graph Tsetlin Machines</h3>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/HGTM" target="_blank" rel="noopener"><b>HGTM</b></a></div><div><p>A library for stacking Graph Tsetlin Machine layers with projected feedback between layers.</p><small>Alpha. One-layer parity with the reference GraphTM is verified; joint two-layer training is documented as failing.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/Multi-HGTM" target="_blank" rel="noopener"><b>Multi-HGTM</b></a> · <a href="https://github.com/AnwarDebes/Multi-HGTM/blob/main/paper/multihgtm.pdf" target="_blank" rel="noopener">paper</a></div><div><p>One Graph Tsetlin Machine tower per input view, fused by readable cross-view clauses.</p><small>0.968 vs 0.727 for late fusion on a synthetic cross-view task; on real data the two tie.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/RGTM" target="_blank" rel="noopener"><b>RGTM</b></a></div><div><p>Weight-tied recurrent message passing for Graph Tsetlin Machines.</p><small>Alpha, with the negative results written down.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/graphtm-cbr" target="_blank" rel="noopener"><b>graphtm-cbr</b></a></div><div><p>A graph-walking Tsetlin Machine for Ames mutagenicity that explains each prediction and proposes a minimal valid molecule edit.</p><small>Recourse succeeds for 95.5% (191/200) of positives. AUROC 0.685 trails a fingerprint baseline, and the README says so.</small></div></div>
+  <h3 style="color:#f472b6">Safety and verification</h3>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/THGTM" target="_blank" rel="noopener"><b>THGTM</b></a> · <a href="https://github.com/AnwarDebes/THGTM/blob/main/paper/thgtm.pdf" target="_blank" rel="noopener">paper</a></div><div><p>Echo-Trace automata and bounded temporal literals for verifying whole agent trajectories, not single steps.</p><small>Slow-roll exfiltration (synthetic): attack success 0.687 per step, 0.000 with trajectory monitors.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/trace" target="_blank" rel="noopener"><b>TRACE</b></a> · <a href="https://github.com/AnwarDebes/trace/blob/main/paper/trace.pdf" target="_blank" rel="noopener">paper</a></div><div><p>A CPU-only runtime guardrail for AI agents: a Tsetlin content guard with readable clauses, temporal monitors and a tamper-evident certificate ledger.</p><small>F1 0.827 on deepset/prompt-injections at 107 µs per check, in 12.5 KiB.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/reins" target="_blank" rel="noopener"><b>REINS</b></a> · <a href="https://github.com/AnwarDebes/reins/blob/main/paper/reins.pdf" target="_blank" rel="noopener">paper</a></div><div><p>Least-cost repair of unsafe agent tool calls under temporal safety policies, sealed in certificates.</p><small>3x the task completion of blocking at the same safety (synthetic benchmark); 226 µs median per step.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/veritas" target="_blank" rel="noopener"><b>VERITAS</b></a> · <a href="https://github.com/AnwarDebes/veritas/blob/main/paper/veritas.pdf" target="_blank" rel="noopener">paper</a></div><div><p>An interpretable guardrail whose declared safety properties are proved or refuted by SAT/SMT solvers, with bypasses repaired by construction.</p><small>Retraining stalls at 8 provable bypasses; constructive repair reaches 0 while accuracy goes 0.69 to 0.71.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/clauseguard" target="_blank" rel="noopener"><b>clauseguard</b></a></div><div><p>An audit layer that checks LLM claims against evidence with a dual-graph Tsetlin Machine.</p><small>Work in progress: the README lists targets, not measurements.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/clausegate" target="_blank" rel="noopener"><b>clausegate</b></a></div><div><p>A verifier for AI agent tool calls: ALLOW, DENY or NEEDS-OVERSIGHT, with clauses and signed receipts.</p><small>AgentDojo: attack success 0.000 at 0.302 benign utility (fail-closed); 6.18 ms per call on CPU.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/clause86" target="_blank" rel="noopener"><b>clause86</b></a></div><div><p>An explainable hiring-decision prototype with clause explanations, receipts and counterfactual recourse.</p><small>Prototype; the current accuracy is weak and documented as such.</small></div></div>
+  <h3 style="color:#fbbf24">Interpretability</h3>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/candor" target="_blank" rel="noopener"><b>CANDOR</b></a> · <a href="https://github.com/AnwarDebes/candor/blob/main/paper/candor.pdf" target="_blank" rel="noopener">paper</a></div><div><p>Interpretability by construction: a Legible Bottleneck routes a layer through named concepts and emits a Faithfulness Certificate on every forward pass.</p><small>On synthetic ground truth: δ ≈ 0.002 (99.9% agreement), no measurable accuracy tax, backdoor detection at AUC ≈ 0.90.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/lucid" target="_blank" rel="noopener"><b>LUCID</b></a> · <a href="https://github.com/AnwarDebes/lucid/blob/main/paper/lucid.pdf" target="_blank" rel="noopener">paper</a></div><div><p>A glass-box, safety-shielded agent for ARC-AGI-3, with a readable world model and a decision trace for every step.</p><small>Completes 2 public ARC-AGI-3 levels (VC33, LP85); its overall score sits in the same sub-1% regime as frontier models.</small></div></div>
+  <h3 style="color:#34d399">Tsetlin Machine foundations</h3>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/RobTM" target="_blank" rel="noopener"><b>RobTM</b></a> · <a href="https://github.com/AnwarDebes/RobTM/blob/main/paper/robtm.pdf" target="_blank" rel="noopener">paper</a></div><div><p>Certified flip-distance robustness and abstention for Tsetlin Machines.</p><small>Certificate in about 0.05 ms per sample (synthetic data).</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/ConfTM" target="_blank" rel="noopener"><b>ConfTM</b></a> · <a href="https://github.com/AnwarDebes/ConfTM/blob/main/paper/conftm.pdf" target="_blank" rel="noopener">paper</a></div><div><p>Conformal prediction sets and coverage-guaranteed recourse for Tsetlin Machines.</p><small>Adaptive coverage 0.900 at a 0.9 target under drift (synthetic).</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/FedTM" target="_blank" rel="noopener"><b>FedTM</b></a> · <a href="https://github.com/AnwarDebes/FedTM/blob/main/paper/fedtm.pdf" target="_blank" rel="noopener">paper</a></div><div><p>A federated Tsetlin Machine with differential privacy and Rényi accounting.</p><small>0.875 accuracy at ε = 4 (synthetic data).</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/CCTM" target="_blank" rel="noopener"><b>CCTM</b></a> · <a href="https://github.com/AnwarDebes/CCTM/blob/main/paper/cctm.pdf" target="_blank" rel="noopener">paper</a></div><div><p>A Tsetlin Machine trained on counterfactual pairs, with recourse receipts.</p><small>Demographic parity gap 0.041 vs 0.181 (synthetic data).</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/DiTM" target="_blank" rel="noopener"><b>DiTM</b></a> · <a href="https://github.com/AnwarDebes/DiTM/blob/main/paper/ditm.pdf" target="_blank" rel="noopener">paper</a></div><div><p>A generative Tsetlin Machine: discrete diffusion over Boolean vectors, readable at every step.</p><small>Anomaly ROC AUC 0.677 vs 0.580 for naive Bayes.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/lifelong-tm" target="_blank" rel="noopener"><b>lifelong-tm</b></a></div><div><p>Continual learning for Tsetlin Machines.</p><small>Work in progress.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/tsetlin-zoo" target="_blank" rel="noopener"><b>tsetlin-zoo</b></a></div><div><p>A survey of Boolean clause learners across seven sibling projects.</p><small>Survey draft.</small></div></div>
+  <h3 style="color:#fb923c">Climate and health simulators</h3>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/PyroPredict" target="_blank" rel="noopener"><b>PyroPredict</b></a> · <a href="https://github.com/AnwarDebes/PyroPredict/blob/main/paper/pyropredict.pdf" target="_blank" rel="noopener">paper</a></div><div><p>A wildfire spread simulator with forecast-aware evacuation routing.</p><small>Synthetic landscapes, with a technical report.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/ThermoGuard" target="_blank" rel="noopener"><b>ThermoGuard</b></a> · <a href="https://github.com/AnwarDebes/ThermoGuard/blob/main/paper/thermoguard.pdf" target="_blank" rel="noopener">paper</a></div><div><p>An indoor heat-risk forecaster with equity-aware triage.</p><small>Synthetic cities, with a technical report.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/SmokeShield" target="_blank" rel="noopener"><b>SmokeShield</b></a> · <a href="https://github.com/AnwarDebes/SmokeShield/blob/main/paper/smokeshield.pdf" target="_blank" rel="noopener">paper</a></div><div><p>A browser app that estimates indoor PM2.5 during wildfire smoke and ranks interventions.</p><small>Reproduces the indoor/outdoor ratios reported in five published studies.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/PipeGuard" target="_blank" rel="noopener"><b>PipeGuard</b></a> · <a href="https://github.com/AnwarDebes/PipeGuard/blob/main/paper/pipeguard.pdf" target="_blank" rel="noopener">paper</a></div><div><p>A browser app that estimates when home pipes freeze from forecast lows.</p><small>All 6 published time-constant configurations fall within the cited bands.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/HotCarWatch" target="_blank" rel="noopener"><b>HotCarWatch</b></a> · <a href="https://github.com/AnwarDebes/HotCarWatch/blob/main/paper/hotcarwatch.pdf" target="_blank" rel="noopener">paper</a></div><div><p>A parked-car cabin heating simulator. The only safe interval is zero minutes.</p><small>All 16 published cabin cases reproduce within tolerance.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/HomeJoule" target="_blank" rel="noopener"><b>HomeJoule</b></a> · <a href="https://github.com/AnwarDebes/HomeJoule/blob/main/paper/homejoule.pdf" target="_blank" rel="noopener">paper</a></div><div><p>A home energy simulator that ranks upgrades by cost and CO2.</p><small>10 published benchmark cases pass.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/SleepArchitect" target="_blank" rel="noopener"><b>SleepArchitect</b></a> · <a href="https://github.com/AnwarDebes/SleepArchitect/blob/main/paper/sleeparchitect.pdf" target="_blank" rel="noopener">paper</a></div><div><p>Predicts tonight&#x27;s sleep from caffeine, alcohol, light, exercise and meals, using published models.</p><small>Not a medical device, as its README says.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/CaffeineSense" target="_blank" rel="noopener"><b>CaffeineSense</b></a> · <a href="https://github.com/AnwarDebes/CaffeineSense/blob/main/paper/caffeinesense.pdf" target="_blank" rel="noopener">paper</a></div><div><p>Personal caffeine half-life and the latest sensible time for one more coffee.</p><small>Reproduces published half-life ranges for 11 covariate combinations.</small></div></div>
+  <h3 style="color:#c4b5fd">Tools and products</h3>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/vsclaude" target="_blank" rel="noopener"><b>vsclaude</b></a></div><div><p>A native desktop IDE (Tauri, React, Rust) where Pixie, a pixel-art companion, acts out what your AI coding agent is really doing.</p><small>Beta; native installers build today. House rule: the animation never lies.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/PocketOS" target="_blank" rel="noopener"><b>PocketOS</b></a></div><div><p>A whole desktop environment inside your phone&#x27;s browser: windows, a virtual filesystem, a terminal and a code editor.</p><small>Offline and installable.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/Mneme-Education-Ecosystem" target="_blank" rel="noopener"><b>Mneme</b></a></div><div><p>Textbook in, Anki deck out, on local models, so nothing leaves your machine.</p><small>Alpha, 156 tests passing.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/cookie-galaxy" target="_blank" rel="noopener"><b>cookie-galaxy</b></a></div><div><p>A scroll-driven Three.js storefront for a fictional cookie brand.</p><small>The hero cookie is a planet.</small></div></div>
+  <div class="item"><div><a href="https://github.com/AnwarDebes/RL-CCA" target="_blank" rel="noopener"><b>NEXUS</b></a></div><div><p>An AlphaZero-style Chinese Checkers agent with Gumbel MCTS and a conv-transformer network.</p><small>Built for a course tournament.</small></div></div>
+</section>
+
+<script src="data.js"></script>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+
+const U = window.UNIVERSE;
+const N = U.nodes;
+const byId = Object.fromEntries(N.map((n) => [n.id, n]));
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = (id) => document.getElementById(id);
+
+// ------------------------------------------------------------- renderers
+const canvas = $('gl');
+let renderer;
+try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' }); }
+catch (e) { $('loader').classList.add('done'); $('list').classList.add('open'); throw e; }
+renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+const labelRenderer = new CSS2DRenderer({ element: $('labels') });
+
+const scene = new THREE.Scene();
+scene.background = (() => {
+  const c = document.createElement('canvas'); c.width = c.height = 1024; const g = c.getContext('2d');
+  const lin = g.createLinearGradient(0, 0, 1024, 1024);
+  lin.addColorStop(0, '#05080f'); lin.addColorStop(0.6, '#080e1d'); lin.addColorStop(1, '#0c1229');
+  g.fillStyle = lin; g.fillRect(0, 0, 1024, 1024);
+  const r = g.createRadialGradient(512, 470, 0, 512, 470, 560);
+  r.addColorStop(0, 'rgba(99,102,241,0.20)'); r.addColorStop(0.6, 'rgba(124,58,237,0.06)'); r.addColorStop(1, 'rgba(0,0,0,0)');
+  g.fillStyle = r; g.fillRect(0, 0, 1024, 1024);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+})();
+scene.fog = new THREE.FogExp2(0x070b18, 0.016);
+
+const camera = new THREE.PerspectiveCamera(48, 1, 0.1, 500);
+const HOME = new THREE.Vector3(0, 3.0, 16.5);
+camera.position.set(0, 14, 70);
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true;
+controls.dampingFactor = 0.07;
+controls.enablePan = false;
+controls.minDistance = 3.5;
+controls.maxDistance = 42;
+controls.autoRotateSpeed = 0.32;
+controls.autoRotate = false;
+
+scene.add(new THREE.AmbientLight(0x8090ff, 0.55));
+const coreLight = new THREE.PointLight(0xa78bfa, 60, 30, 1.6);
+scene.add(coreLight);
+const key = new THREE.DirectionalLight(0xffffff, 1.1);
+key.position.set(6, 10, 8);
+scene.add(key);
+
+// ------------------------------------------------------------- textures
+function radial(stops) {
+  const c = document.createElement('canvas'); c.width = c.height = 128; const g = c.getContext('2d');
+  const gr = g.createRadialGradient(64, 64, 0, 64, 64, 64);
+  stops.forEach(([o, col]) => gr.addColorStop(o, col)); g.fillStyle = gr; g.fillRect(0, 0, 128, 128);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; return t;
+}
+const haloTex = radial([[0, 'rgba(255,255,255,1)'], [0.25, 'rgba(255,255,255,.35)'], [1, 'rgba(255,255,255,0)']]);
+const dotTex = radial([[0, 'rgba(255,255,255,1)'], [0.4, 'rgba(255,255,255,.55)'], [1, 'rgba(255,255,255,0)']]);
+
+// ------------------------------------------------------------- stars and nebula
+{
+  const n = 2600, p = new Float32Array(n * 3);
+  for (let i = 0; i < n; i++) {
+    const r = 45 + Math.random() * 110, th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
+    p.set([r * Math.sin(ph) * Math.cos(th), r * Math.cos(ph), r * Math.sin(ph) * Math.sin(th)], i * 3);
+  }
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(p, 3));
+  scene.add(new THREE.Points(g, new THREE.PointsMaterial({ size: 0.28, map: dotTex, color: 0xb4bcff, transparent: true, opacity: 0.85, depthWrite: false, fog: false })));
+  [['#6d28d9', [-30, 10, -60], 70], ['#0e7490', [40, -12, -70], 60], ['#9d174d', [10, 25, -90], 55]].forEach(([c, pos, s]) => {
+    const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: haloTex, color: new THREE.Color(c), transparent: true, opacity: 0.18, depthWrite: false, blending: THREE.AdditiveBlending, fog: false }));
+    sp.position.set(...pos); sp.scale.setScalar(s); scene.add(sp);
+  });
+}
+
+// ------------------------------------------------------------- the core: a small glass box
+const core = new THREE.Group();
+scene.add(core);
+{
+  const edges = new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(1.5, 1.5, 1.5)),
+    new THREE.LineBasicMaterial({ color: 0xcffafe, transparent: true, opacity: 0.9, toneMapped: false }));
+  core.add(edges);
+  const glass = new THREE.Mesh(new THREE.BoxGeometry(1.5, 1.5, 1.5), new THREE.MeshPhysicalMaterial({ color: 0x8b9cff, transparent: true, opacity: 0.08, roughness: 0.1, depthWrite: false }));
+  core.add(glass);
+  const pts = [];
+  for (const x of [-0.4, 0, 0.4]) for (const y of [-0.4, 0, 0.4]) for (const z of [-0.4, 0, 0.4]) pts.push(x, y, z);
+  const g = new THREE.BufferGeometry(); g.setAttribute('position', new THREE.Float32BufferAttribute(pts, 3));
+  core.add(new THREE.Points(g, new THREE.PointsMaterial({ size: 0.12, map: dotTex, color: 0xffffff, transparent: true, depthWrite: false, toneMapped: false })));
+  const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: haloTex, color: 0xa78bfa, transparent: true, opacity: 0.55, depthWrite: false, blending: THREE.AdditiveBlending }));
+  halo.scale.setScalar(5.5); core.add(halo);
+  const hit = new THREE.Mesh(new THREE.SphereGeometry(1.2, 12, 8), new THREE.MeshBasicMaterial({ visible: false }));
+  hit.userData.core = true; core.add(hit); core.userData.hit = hit;
+  const div = document.createElement('div'); div.className = 'label imp3 show'; div.style.setProperty('--c', '#a78bfa');
+  div.textContent = 'Anwar Debes · the glass box';
+  div.addEventListener('click', (e) => { e.stopPropagation(); selectCore(); });
+  const lab = new CSS2DObject(div); lab.position.set(0, 1.35, 0); core.add(lab);
+}
+
+// ------------------------------------------------------------- nodes
+const SIZE = [0, 0.15, 0.22, 0.31];
+const meshes = [];
+const neighbors = Object.fromEntries(N.map((n) => [n.id, new Set()]));
+U.edges.forEach(([a, b]) => { neighbors[a].add(b); neighbors[b].add(a); });
+N.forEach((n, i) => {
+  const col = new THREE.Color(U.clusters[n.cluster].color);
+  const r = SIZE[n.imp];
+  const mat = new THREE.MeshStandardMaterial({ color: col, emissive: col, emissiveIntensity: 0.75, roughness: 0.35, metalness: 0.15 });
+  const m = new THREE.Mesh(new THREE.SphereGeometry(r, 32, 18), mat);
+  m.position.fromArray(n.pos);
+  m.userData.node = n;
+  scene.add(m);
+  meshes.push(m);
+  const halo = new THREE.Sprite(new THREE.SpriteMaterial({ map: haloTex, color: col, transparent: true, opacity: 0.5, depthWrite: false, blending: THREE.AdditiveBlending }));
+  halo.scale.setScalar(r * 5.6);
+  m.add(halo);
+  let ring = null;
+  if (n.imp === 3) {
+    ring = new THREE.Mesh(new THREE.TorusGeometry(r * 2.15, 0.014, 8, 80), new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: 0.85, toneMapped: false }));
+    ring.rotation.set(Math.PI / 2.3, 0, i);
+    m.add(ring);
+  }
+  const div = document.createElement('div');
+  div.className = 'label imp' + n.imp;
+  div.style.setProperty('--c', U.clusters[n.cluster].color);
+  div.textContent = n.name;
+  div.addEventListener('click', (e) => { e.stopPropagation(); stopTour(); select(n); });
+  div.addEventListener('pointerenter', () => { hoverLabel = n; });
+  div.addEventListener('pointerleave', () => { if (hoverLabel === n) hoverLabel = null; });
+  const lab = new CSS2DObject(div);
+  lab.position.set(0, r + 0.24, 0);
+  m.add(lab);
+  Object.assign(n, { mesh: m, mat, halo, ring, div, r, focus: 1, scale: 0, visible: true, col });
+});
+
+// cluster labels
+const clusterLabels = {};
+U.order.forEach((c) => {
+  const ns = N.filter((n) => n.cluster === c);
+  const v = new THREE.Vector3();
+  ns.forEach((n) => v.add(new THREE.Vector3(...n.pos)));
+  v.divideScalar(ns.length).normalize().multiplyScalar(9.6);
+  const div = document.createElement('div');
+  div.className = 'clabel';
+  div.style.setProperty('--c', U.clusters[c].color);
+  div.textContent = U.clusters[c].name;
+  const o = new CSS2DObject(div); o.position.copy(v); scene.add(o);
+  clusterLabels[c] = div;
+});
+
+// ------------------------------------------------------------- edges
+const E = U.edges.map(([a, b]) => ({ a: byId[a], b: byId[b] }));
+const edgeGeo = new THREE.BufferGeometry();
+const edgePos = new Float32Array(E.length * 6), edgeCol = new Float32Array(E.length * 6);
+edgeGeo.setAttribute('position', new THREE.BufferAttribute(edgePos, 3));
+edgeGeo.setAttribute('color', new THREE.BufferAttribute(edgeCol, 3));
+const edgeMat = new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.38, depthWrite: false });
+scene.add(new THREE.LineSegments(edgeGeo, edgeMat));
+const hiGeo = new THREE.BufferGeometry();
+const hiPos = new Float32Array(E.length * 6), hiCol = new Float32Array(E.length * 6);
+hiGeo.setAttribute('position', new THREE.BufferAttribute(hiPos, 3));
+hiGeo.setAttribute('color', new THREE.BufferAttribute(hiCol, 3));
+const hiLines = new THREE.LineSegments(hiGeo, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 1, depthWrite: false, toneMapped: false }));
+scene.add(hiLines);
+
+function writeEdges() {
+  let k = 0, h = 0;
+  const f = focusNode();
+  E.forEach((e) => {
+    const sa = e.a.scale, sb = e.b.scale;
+    if (!e.a.visible || !e.b.visible || sa < 0.05 || sb < 0.05) return;
+    const pa = e.a.mesh.position, pb = e.b.mesh.position;
+    const dim = f && !(e.a === f || e.b === f) ? 0.25 : 1;
+    edgePos.set([pa.x, pa.y, pa.z, pb.x, pb.y, pb.z], k * 6);
+    edgeCol.set([e.a.col.r * dim, e.a.col.g * dim, e.a.col.b * dim, e.b.col.r * dim, e.b.col.g * dim, e.b.col.b * dim], k * 6);
+    k++;
+    if (f && (e.a === f || e.b === f)) {
+      hiPos.set([pa.x, pa.y, pa.z, pb.x, pb.y, pb.z], h * 6);
+      hiCol.set([e.a.col.r, e.a.col.g, e.a.col.b, e.b.col.r, e.b.col.g, e.b.col.b], h * 6);
+      h++;
+    }
+  });
+  edgeGeo.setDrawRange(0, k * 2); edgeGeo.attributes.position.needsUpdate = true; edgeGeo.attributes.color.needsUpdate = true;
+  hiGeo.setDrawRange(0, h * 2); hiGeo.attributes.position.needsUpdate = true; hiGeo.attributes.color.needsUpdate = true;
+}
+
+// ------------------------------------------------------------- pulses: signals walking the graph
+const pulses = [];
+for (let i = 0; i < 16; i++) {
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: dotTex, color: 0xffffff, transparent: true, opacity: 0, depthWrite: false, blending: THREE.AdditiveBlending, toneMapped: false }));
+  sp.scale.setScalar(0.22);
+  scene.add(sp);
+  const e = E[Math.floor(Math.random() * E.length)];
+  pulses.push({ sp, from: e.a, to: e.b, t: Math.random(), speed: 0.35 + Math.random() * 0.35 });
+}
+function stepPulses(dt) {
+  pulses.forEach((p) => {
+    p.t += dt * p.speed;
+    if (p.t >= 1) {
+      const nb = [...neighbors[p.to.id]].map((id) => byId[id]).filter((n) => n.visible && n !== p.from);
+      if (nb.length) { p.from = p.to; p.to = nb[Math.floor(Math.random() * nb.length)]; }
+      else { const e = E[Math.floor(Math.random() * E.length)]; p.from = e.a; p.to = e.b; }
+      p.t = 0;
+    }
+    const ok = p.from.visible && p.to.visible && p.from !== p.to;
+    p.sp.position.lerpVectors(p.from.mesh.position, p.to.mesh.position, p.t);
+    p.sp.material.opacity = ok ? Math.sin(Math.PI * p.t) * 0.95 : 0;
+    p.sp.material.color.copy(p.to.col).lerp(new THREE.Color(1, 1, 1), 0.6);
+  });
+}
+
+// ------------------------------------------------------------- post-processing
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.7, 0.5, 0.22);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+function resize() {
+  const w = innerWidth, h = innerHeight;
+  renderer.setSize(w, h, false); composer.setSize(w, h); bloom.resolution.set(w, h); labelRenderer.setSize(w, h);
+  camera.aspect = w / h; camera.fov = w < 700 ? 62 : 48; camera.updateProjectionMatrix();
+}
+addEventListener('resize', resize);
+resize();
+
+// ------------------------------------------------------------- interaction state
+let hover = null, hoverLabel = null, selected = null, coreSelected = false;
+const focusNode = () => selected || hoverLabel || hover;
+const ray = new THREE.Raycaster();
+const ptr = new THREE.Vector2(9, 9);
+let downAt = null;
+canvas.addEventListener('pointermove', (e) => { ptr.set(e.clientX / innerWidth * 2 - 1, -(e.clientY / innerHeight) * 2 + 1); });
+canvas.addEventListener('pointerleave', () => ptr.set(9, 9));
+canvas.addEventListener('pointerdown', (e) => { downAt = [e.clientX, e.clientY]; stopTour(); userTouched(); });
+canvas.addEventListener('pointerup', (e) => {
+  if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 6) { downAt = null; return; }
+  downAt = null;
+  ptr.set(e.clientX / innerWidth * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+  const hit = pick();
+  if (hit === 'core') selectCore(); else if (hit) select(hit); else deselect();
+});
+canvas.addEventListener('wheel', () => { stopTour(); userTouched(); }, { passive: true });
+function pick() {
+  ray.setFromCamera(ptr, camera);
+  const vis = meshes.filter((m) => m.userData.node.visible);
+  const hits = ray.intersectObjects(vis.concat([core.userData.hit]), false);
+  if (!hits.length) return null;
+  return hits[0].object.userData.core ? 'core' : hits[0].object.userData.node;
+}
+
+// camera flights
+let fly = null;
+function flyTo(pos, target, dur = 1.5) {
+  fly = { p0: camera.position.clone(), t0: controls.target.clone(), p1: pos.clone(), t1: target.clone(), t: 0, dur };
+  controls.enabled = false;
+}
+const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+let idleTimer = null;
+function userTouched() {
+  controls.autoRotate = false;
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(() => { if (!selected && !coreSelected && !reduce) controls.autoRotate = true; }, 9000);
+}
+
+// ------------------------------------------------------------- panel
+const panel = $('panel');
+function fillPanel(n) {
+  const c = U.clusters[n.cluster];
+  panel.style.setProperty('--c', c.color);
+  $('p-cl').style.setProperty('--c', c.color);
+  $('p-cl').querySelector('span').textContent = c.name;
+  $('p-name').textContent = n.name;
+  $('p-desc').textContent = n.desc;
+  $('p-meas').textContent = n.measured;
+  $('p-measbox').style.display = n.measured ? '' : 'none';
+  const links = $('p-links'); links.innerHTML = '';
+  const a = document.createElement('a'); a.className = 'main'; a.href = n.repo; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Open repository →'; links.append(a);
+  if (n.paper) { const b = document.createElement('a'); b.href = n.paper; b.target = '_blank'; b.rel = 'noopener'; b.textContent = 'Read the paper (PDF)'; links.append(b); }
+  const nb = $('p-nb'); nb.innerHTML = '';
+  [...neighbors[n.id]].map((id) => byId[id]).forEach((m) => {
+    const s = document.createElement('span'); s.className = 'n'; s.textContent = m.name; s.style.borderColor = U.clusters[m.cluster].color + '66';
+    s.onclick = () => { stopTour(); select(m); }; nb.append(s);
+  });
+  $('p-nbbox').style.display = neighbors[n.id].size ? '' : 'none';
+}
+function select(n) {
+  if (!n.visible) setCluster(n.cluster, true);
+  selected = n; coreSelected = false;
+  fillPanel(n);
+  panel.classList.add('open');
+  const p = n.mesh.position.clone();
+  const dir = p.clone().normalize();
+  const side = new THREE.Vector3().crossVectors(dir, new THREE.Vector3(0, 1, 0)).normalize();
+  const wide = innerWidth > 760;
+  const camPos = p.clone().add(dir.multiplyScalar(wide ? 5.2 : 8.8)).add(new THREE.Vector3(0, 1.1, 0)).add(side.multiplyScalar(wide ? 1.6 : 0));
+  flyTo(camPos, p.clone().add(new THREE.Vector3(0, wide ? 0 : -2.2, 0)));
+  controls.autoRotate = false;
+  history.replaceState(null, '', '#' + n.id);
+}
+function selectCore() {
+  selected = null; coreSelected = true;
+  panel.style.setProperty('--c', '#a78bfa');
+  $('p-cl').style.setProperty('--c', '#a78bfa');
+  $('p-cl').querySelector('span').textContent = 'The glass box';
+  $('p-name').textContent = 'Anwar Debes';
+  $('p-desc').textContent = 'Interpretable AI researcher at CAIR, University of Agder, and CFO at SafeMediAI. Everything in this universe orbits one idea: models whose decisions are made of readable logic, so anyone can check them.';
+  $('p-meas').textContent = 'Eurekaprisen 2025 for the best bachelor thesis of the Faculty of Information Technology and Electrical Engineering at NTNU Gjøvik.';
+  $('p-measbox').style.display = '';
+  const links = $('p-links'); links.innerHTML = '';
+  [['Home', '../', 'main'], ['GitHub profile', 'https://github.com/AnwarDebes', '']].forEach(([t, h, c]) => {
+    const a = document.createElement('a'); a.textContent = t; a.href = h; if (c) a.className = c; if (h.startsWith('http')) { a.target = '_blank'; a.rel = 'noopener'; } links.append(a);
+  });
+  $('p-nbbox').style.display = 'none';
+  panel.classList.add('open');
+  flyTo(new THREE.Vector3(2.4, 1.6, 5.2), new THREE.Vector3(0, 0, 0));
+  history.replaceState(null, '', '#me');
+}
+function deselect() {
+  if (!selected && !coreSelected) return;
+  selected = null; coreSelected = false;
+  panel.classList.remove('open');
+  flyTo(camera.position.clone().normalize().multiplyScalar(HOME.length()).setY(HOME.y), new THREE.Vector3(0, 0, 0), 1.6);
+  history.replaceState(null, '', location.pathname);
+  userTouched();
+}
+$('close').onclick = () => { stopTour(); deselect(); };
+addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT') return;
+  if (e.key === 'Escape') { stopTour(); deselect(); $('list').classList.remove('open'); }
+  if (e.key === 'b' || e.key === 'B') blackBox();
+});
+
+// ------------------------------------------------------------- filters
+const hidden = new Set();
+const chips = $('chips');
+U.order.forEach((c) => {
+  const el = document.createElement('div'); el.className = 'chip'; el.style.setProperty('--c', U.clusters[c].color);
+  el.innerHTML = '<i></i>' + U.clusters[c].name + ' <b>' + N.filter((n) => n.cluster === c).length + '</b>';
+  el.onclick = () => setCluster(c, hidden.has(c));
+  chips.append(el); U.clusters[c].chip = el;
+});
+function setCluster(c, show) {
+  if (show) hidden.delete(c); else hidden.add(c);
+  U.clusters[c].chip.classList.toggle('off', !show);
+  N.forEach((n) => { if (n.cluster === c) n.visible = show; });
+  if (!show && selected && selected.cluster === c) deselect();
+}
+
+// ------------------------------------------------------------- search
+const dl = $('names');
+N.forEach((n) => { const o = document.createElement('option'); o.value = n.name; dl.append(o); });
+$('search').addEventListener('change', (e) => {
+  const q = e.target.value.trim().toLowerCase();
+  const n = N.find((x) => x.name.toLowerCase() === q) || N.find((x) => x.name.toLowerCase().includes(q));
+  if (n) { stopTour(); select(n); e.target.blur(); }
+});
+
+// ------------------------------------------------------------- tour
+const TOUR = ['glassbox', 'candor', 'trace', 'veritas', 'lucid', 'vsc'];
+let tour = null;
+function startTour() {
+  stopTour();
+  tour = { i: -1, timer: null };
+  $('tour').textContent = 'Stop the tour';
+  $('tourchip').style.display = 'block';
+  nextStop();
+}
+function nextStop() {
+  if (!tour) return;
+  tour.i++;
+  if (tour.i >= TOUR.length) { stopTour(); deselect(); return; }
+  select(byId[TOUR[tour.i]]);
+  $('tourchip').textContent = 'tour · ' + (tour.i + 1) + ' / ' + TOUR.length + ' · the most important work · Esc to stop';
+  tour.timer = setTimeout(nextStop, 6500);
+}
+function stopTour() {
+  if (!tour) return;
+  clearTimeout(tour.timer); tour = null;
+  $('tour').textContent = 'Take the tour';
+  $('tourchip').style.display = 'none';
+}
+$('tour').onclick = () => (tour ? (stopTour(), deselect()) : startTour());
+
+// ------------------------------------------------------------- list view and the black box joke
+$('listbtn').onclick = () => $('list').classList.add('open');
+$('listclose').onclick = () => $('list').classList.remove('open');
+let blackUntil = 0;
+function blackBox() {
+  blackUntil = performance.now() + 2200;
+  const t = $('toast');
+  t.innerHTML = '<b>Black box mode.</b><br>You cannot see anything. That is the whole problem.<br><span style="color:#94a3b8">Switching back to glass…</span>';
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 2200);
+}
+
+// ------------------------------------------------------------- loop
+const clock = new THREE.Clock();
+let started = false, intro = 0;
+const tmpV = new THREE.Vector3();
+function frame() {
+  requestAnimationFrame(frame);
+  const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
+  if (document.hidden) return;
+
+  // intro: fly in and let the stars appear
+  if (!started) {
+    started = true; $('loader').classList.add('done');
+    flyTo(HOME, new THREE.Vector3(0, 0, 0), reduce ? 0.01 : 2.8);
+  }
+  intro = Math.min(1, intro + dt / 2.6);
+
+  if (fly) {
+    fly.t = Math.min(1, fly.t + dt / fly.dur);
+    const k = ease(fly.t);
+    camera.position.lerpVectors(fly.p0, fly.p1, k);
+    controls.target.lerpVectors(fly.t0, fly.t1, k);
+    if (fly.t >= 1) { fly = null; controls.enabled = true; if (!selected && !coreSelected && !tour && !reduce && !idleTimer) controls.autoRotate = true; }
+  }
+
+  // hover by raycast (labels set hoverLabel directly)
+  if (!fly) { const h = pick(); hover = h && h !== 'core' ? h : null; canvas.style.cursor = h ? 'pointer' : ''; }
+
+  const f = focusNode();
+  const fn = f ? neighbors[f.id] : null;
+  const camDist = camera.position.length();
+  N.forEach((n, i) => {
+    const delay = (i / N.length) * 0.6;
+    const appear = Math.min(1, Math.max(0, (intro - delay) / 0.4));
+    const targetScale = (n.visible ? 1 : 0) * appear * (n === f ? 1.35 : 1);
+    n.scale += (targetScale - n.scale) * Math.min(1, dt * 7);
+    n.mesh.scale.setScalar(Math.max(0.0001, n.scale));
+    const focus = !f || n === f || (fn && fn.has(n.id)) ? 1 : 0.22;
+    n.focus += (focus - n.focus) * Math.min(1, dt * 6);
+    n.mat.emissiveIntensity = 0.25 + 0.75 * n.focus + (n === f ? 0.6 : 0) + (n.imp === 3 ? 0.12 * Math.sin(t * 2 + i) : 0);
+    n.halo.material.opacity = 0.08 + 0.32 * n.focus;
+    if (n.ring) { n.ring.rotation.z += dt * 0.6; n.ring.material.opacity = 0.25 + 0.6 * n.focus; }
+    const d = n.mesh.getWorldPosition(tmpV).distanceTo(camera.position);
+    const show = n.visible && n.scale > 0.5 && (n.imp >= 2 || n === f || (fn && fn.has(n.id)) || d < 9.5);
+    if (show !== n._show) { n.div.classList.toggle('show', show); n._show = show; }
+    const hot = n === f;
+    if (hot !== n._hot) { n.div.classList.toggle('hot', hot); n._hot = hot; }
+  });
+  U.order.forEach((c) => {
+    const show = !hidden.has(c) && intro > 0.9 && !selected && camDist > 11;
+    const div = clusterLabels[c];
+    if (show !== div._show) { div.classList.toggle('show', show); div._show = show; }
+  });
+  writeEdges();
+  stepPulses(reduce ? 0 : dt);
+  core.rotation.y += dt * 0.35; core.rotation.x = Math.sin(t * 0.4) * 0.15;
+  coreLight.intensity = 50 + 15 * Math.sin(t * 1.3);
+
+  const black = performance.now() < blackUntil;
+  renderer.toneMappingExposure += ((black ? 0.0 : 1.0) - renderer.toneMappingExposure) * Math.min(1, dt * 5);
+
+  controls.update();
+  composer.render();
+  labelRenderer.render(scene, camera);
+  $('labels').style.opacity = black ? 0 : 1;
+}
+frame();
+setTimeout(() => { if (!idleTimer && !selected && !coreSelected && !tour && !reduce) controls.autoRotate = true; }, 3200);
+
+// deep links: #trace, #candor, #me
+const h = decodeURIComponent(location.hash.slice(1)).toLowerCase();
+if (h) setTimeout(() => {
+  if (h === 'me') return selectCore();
+  const n = N.find((x) => x.id === h || x.name.toLowerCase() === h);
+  if (n) select(n);
+}, 3000);
+</script>
+</body>
+</html>
