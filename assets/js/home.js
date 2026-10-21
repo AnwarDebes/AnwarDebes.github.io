@@ -213,6 +213,7 @@ async function startBoards() {
     lucid: 'LUCID: an ARC-style puzzle grid.',
     graphtm: 'graphtm-cbr: nitrobenzene, a textbook Ames-positive molecule.',
     vsclaude: 'vsclaude: Pixie, who acts out what your coding agent is doing.',
+    pixie: 'Claude Code, in motion: Pixie at its laptop, drawn from the real sprite.',
     nexus: 'NEXUS: the 121-hole star board, with one marble hopping out of its home triangle.',
     pocketos: 'PocketOS: a phone with a desktop inside.',
     sleep: 'SleepArchitect: a 24-hour dial with tonight’s sleep marked.',
