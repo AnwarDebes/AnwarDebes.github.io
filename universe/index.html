@@ -90,6 +90,7 @@ a:hover{text-decoration:underline}
 #list .item p{margin:0;color:#cbd5e1}
 #list .item small{display:block;color:var(--muted);margin-top:4px}
 #list .close{position:fixed;right:24px;top:20px}
+@media (max-height:640px){.hint{display:none}.chip{padding:5px 10px;font-size:11.5px}.brand h1{font-size:24px}.brand p{display:none}}
 @media (max-width:760px){
  .chips{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;scrollbar-width:none}
  .tools input{width:150px}
@@ -417,6 +418,8 @@ function resize() {
   const w = innerWidth, h = innerHeight;
   renderer.setSize(w, h, false); composer.setSize(w, h); bloom.resolution.set(w, h); labelRenderer.setSize(w, h);
   camera.aspect = w / h; camera.fov = w < 700 ? 62 : 48; camera.updateProjectionMatrix();
+  // short windows get a camera that stands a little further back
+  HOME.set(0, 3.0, 16.5).multiplyScalar(Math.max(1, Math.sqrt(820 / h)));
 }
 addEventListener('resize', resize);
 resize();
