@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Research map, Anwar Debes</title>
-<meta name="description" content="All 39 public research projects by Anwar Debes as an interactive 3D map: Tsetlin Machines, interpretable language models, verifiable guardrails for AI agents and more.">
+<meta name="description" content="All 40 public research projects by Anwar Debes as an interactive 3D map: Tsetlin Machines, interpretable language models, verifiable guardrails for AI agents and more.">
 <link rel="canonical" href="https://anwardebes.github.io/universe/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Anwar Debes">
-<meta property="og:title" content="Research map: 39 projects in 3D">
+<meta property="og:title" content="Research map: 40 projects in 3D">
 <meta property="og:description" content="Seven lines of research, one idea: models whose decisions you can read. Drag to turn the map, click any project.">
 <meta property="og:url" content="https://anwardebes.github.io/universe/">
 <meta property="og:image" content="https://anwardebes.github.io/universe/og.png">
@@ -134,7 +134,7 @@ body.map { overflow: hidden; }
   <div class="mapbrand">
     <a class="home" href="../">Anwar Debes</a>
     <h1>Research map</h1>
-    <p>39 public projects in seven lines of research. Everything here orbits one idea: models whose decisions you can read.</p>
+    <p>40 public projects in seven lines of research. Everything here orbits one idea: models whose decisions you can read.</p>
   </div>
   <div class="tools">
     <input id="search" list="names" placeholder="Find a project" aria-label="Find a project" autocomplete="off">
@@ -163,13 +163,13 @@ body.map { overflow: hidden; }
 
 <section class="ui" id="list" aria-label="All projects as a list">
   <button class="btn close" id="listclose" type="button">Back to 3D</button>
-  <h2>All 39 projects</h2>
+  <h2>All 40 projects</h2>
   <p style="color:var(--graphite)">The same map, flattened for reading. Every project is open source on GitHub.</p>
   <h3 data-c="lang" style="--c:#2F6F8F"><i></i>Language models</h3>
   <div class="item" id="list-glassbox"><div><b>glassbox-lm</b><small><a href="https://github.com/AnwarDebes/glassbox-lm">Repository</a></small></div><div><p>Measured steps toward a language model whose knowledge is a set of readable Tsetlin Machine clauses. Master&#x27;s research at CAIR, University of Agder.</p><small>Three studies so far; the first alone registered 91 hypotheses before the runs. Results are reported as measured, and most of them are negative.</small></div></div>
   <div class="item" id="list-cdllm"><div><b>Clause-Driven-LLM</b><small><a href="https://github.com/AnwarDebes/Clause-Driven-LLM">Repository</a>, <a href="https://github.com/AnwarDebes/Clause-Driven-LLM/blob/main/paper/report.pdf">paper</a></small></div><div><p>Clause-based routing for LLM agents over frozen embeddings. Low-margin queries go to a human, and every decision comes with a SAT-checkable receipt.</p><small>94.2% routing accuracy on CLINC150 (logistic regression: 95.6%).</small></div></div>
   <div class="item" id="list-attn"><div><b>attention-distilled-graphtm</b><small><a href="https://github.com/AnwarDebes/attention-distilled-graphtm">Repository</a></small></div><div><p>BERT lends its attention edges as the graph, then gets uninstalled. A Graph Tsetlin Machine learns Boolean clauses on top.</p><small>94.77% mean accuracy on R8 over 5 seeds (the BERT teacher: about 98%).</small></div></div>
-  <div class="item" id="list-tmrob"><div><b>tm-llm-robustness-benchmark</b><small><a href="https://github.com/AnwarDebes/tm-llm-robustness-benchmark">Repository</a></small></div><div><p>One robustness harness for Tsetlin Machines and transformers, with adversarial attacks and counterfactual data.</p><small>Honest negative: on counterfactual IMDb the Tsetlin Machine loses about 27 points, BERT about 2.</small></div></div>
+  <div class="item" id="list-tmrob"><div><b>tm-llm-robustness-benchmark</b><small><a href="https://github.com/AnwarDebes/tm-llm-robustness-benchmark">Repository</a></small></div><div><p>One robustness harness for Tsetlin Machines and transformers, with adversarial attacks and counterfactual data.</p><small>Negative result: on counterfactual IMDb the Tsetlin Machine loses about 27 points, BERT about 2.</small></div></div>
   <div class="item" id="list-subword"><div><b>subword-dep-graphtm</b><small><a href="https://github.com/AnwarDebes/subword-dep-graphtm">Repository</a></small></div><div><p>Subword and dependency graphs for text classification with a Graph Tsetlin Machine.</p><small>95.05% mean accuracy on R8 over 5 seeds.</small></div></div>
   <div class="item" id="list-decattn"><div><b>decoder-attention-distill-graphtm</b><small><a href="https://github.com/AnwarDebes/decoder-attention-distill-graphtm">Repository</a></small></div><div><p>Attention from a decoder LLM (Qwen2.5-1.5B) as the graph structure for a Graph Tsetlin Machine.</p><small>94.53% mean on R8. Work in progress; the differences between teachers are not significant.</small></div></div>
   <h3 data-c="graph" style="--c:#62579A"><i></i>Graph Tsetlin Machines</h3>
@@ -203,14 +203,15 @@ body.map { overflow: hidden; }
   <div class="item" id="list-pipe"><div><b>PipeGuard</b><small><a href="https://github.com/AnwarDebes/PipeGuard">Repository</a>, <a href="https://github.com/AnwarDebes/PipeGuard/blob/main/paper/pipeguard.pdf">paper</a></small></div><div><p>A browser app that estimates when home pipes freeze from forecast lows.</p><small>All 6 published time-constant configurations fall within the cited bands.</small></div></div>
   <div class="item" id="list-hotcar"><div><b>HotCarWatch</b><small><a href="https://github.com/AnwarDebes/HotCarWatch">Repository</a>, <a href="https://github.com/AnwarDebes/HotCarWatch/blob/main/paper/hotcarwatch.pdf">paper</a></small></div><div><p>A parked-car cabin heating simulator. The only safe interval is zero minutes.</p><small>All 16 published cabin cases reproduce within tolerance.</small></div></div>
   <div class="item" id="list-home"><div><b>HomeJoule</b><small><a href="https://github.com/AnwarDebes/HomeJoule">Repository</a>, <a href="https://github.com/AnwarDebes/HomeJoule/blob/main/paper/homejoule.pdf">paper</a></small></div><div><p>A home energy simulator that ranks upgrades by cost and CO2.</p><small>10 published benchmark cases pass.</small></div></div>
-  <div class="item" id="list-sleep"><div><b>SleepArchitect</b><small><a href="https://github.com/AnwarDebes/SleepArchitect">Repository</a>, <a href="https://github.com/AnwarDebes/SleepArchitect/blob/main/paper/sleeparchitect.pdf">paper</a></small></div><div><p>Predicts tonight&#x27;s sleep from caffeine, alcohol, light, exercise and meals, using published models.</p><small>Not a medical device, as its README says.</small></div></div>
+  <div class="item" id="list-sleep"><div><b>SleepArchitect</b><small><a href="https://github.com/AnwarDebes/SleepArchitect">Repository</a>, <a href="https://github.com/AnwarDebes/SleepArchitect/blob/main/paper/sleeparchitect.pdf">paper</a>, <a href="https://anwardebes.github.io/SleepArchitect/">live demo</a></small></div><div><p>Predicts tonight&#x27;s sleep from caffeine, alcohol, light, exercise and meals, using published models.</p><small>Reproduces all 11 published findings it was checked against. Live in the browser; not a medical device.</small></div></div>
   <div class="item" id="list-caff"><div><b>CaffeineSense</b><small><a href="https://github.com/AnwarDebes/CaffeineSense">Repository</a>, <a href="https://github.com/AnwarDebes/CaffeineSense/blob/main/paper/caffeinesense.pdf">paper</a></small></div><div><p>Personal caffeine half-life and the latest sensible time for one more coffee.</p><small>Reproduces published half-life ranges for 11 covariate combinations.</small></div></div>
   <h3 data-c="tools" style="--c:#6F6256"><i></i>Tools and products</h3>
   <div class="item" id="list-vsc"><div><b>vsclaude</b><small><a href="https://github.com/AnwarDebes/vsclaude">Repository</a></small></div><div><p>A native desktop IDE (Tauri, React, Rust) where Pixie, a pixel-art companion, acts out what your AI coding agent is really doing.</p><small>Beta; native installers build today. House rule: the animation never lies.</small></div></div>
-  <div class="item" id="list-pocket"><div><b>PocketOS</b><small><a href="https://github.com/AnwarDebes/PocketOS">Repository</a></small></div><div><p>A whole desktop environment inside your phone&#x27;s browser: windows, a virtual filesystem, a terminal and a code editor.</p><small>Offline and installable.</small></div></div>
+  <div class="item" id="list-pocket"><div><b>PocketOS</b><small><a href="https://github.com/AnwarDebes/PocketOS">Repository</a>, <a href="https://anwardebes.github.io/PocketOS/">live demo</a></small></div><div><p>A whole desktop environment inside your phone&#x27;s browser: windows, a virtual filesystem, a terminal and a code editor.</p><small>Offline and installable, and live in the browser.</small></div></div>
   <div class="item" id="list-mneme"><div><b>Mneme</b><small><a href="https://github.com/AnwarDebes/Mneme-Education-Ecosystem">Repository</a></small></div><div><p>Textbook in, Anki deck out, on local models, so nothing leaves your machine.</p><small>Alpha, 156 tests passing.</small></div></div>
   <div class="item" id="list-cookie"><div><b>cookie-galaxy</b><small><a href="https://github.com/AnwarDebes/cookie-galaxy">Repository</a></small></div><div><p>A scroll-driven Three.js storefront for a fictional cookie brand.</p><small>The hero cookie is a planet.</small></div></div>
-  <div class="item" id="list-nexus"><div><b>NEXUS</b><small><a href="https://github.com/AnwarDebes/RL-CCA">Repository</a></small></div><div><p>An AlphaZero-style Chinese Checkers agent with Gumbel MCTS and a conv-transformer network.</p><small>Built for a course tournament.</small></div></div>
+  <div class="item" id="list-nexus"><div><b>NEXUS</b><small><a href="https://github.com/AnwarDebes/RL-CCA">Repository</a></small></div><div><p>An AlphaZero-style agent for 2 to 6 player Chinese Checkers, with Gumbel MCTS and three research prototypes: coalition-aware search, per-component values mixed in the tree, and a wreath-equivariant network.</p><small>324 tests pass on every push.</small></div></div>
+  <div class="item" id="list-idm"><div><b>IDM</b><small><a href="https://github.com/AnwarDebes/IDM">Repository</a></small></div><div><p>An epidemiological data warehouse on 473,189 weekly disease reports (1916 to 2011), stored three ways: a PostgreSQL star schema, MongoDB buckets and a Neo4j graph, with Kafka and ksqlDB streaming.</p><small>13 decision-support queries run on all three back ends side by side.</small></div></div>
 </section>
 
 <script src="data.js"></script>
@@ -455,6 +456,7 @@ function fillPanel(n) {
   const links = $('p-links'); links.innerHTML = '';
   links.append(link('Repository', n.repo));
   if (n.paper) links.append(link('Paper (PDF)', n.paper));
+  if (n.demo) links.append(link('Live demo', n.demo));
   const nb = $('p-nb'); nb.innerHTML = '';
   [...neighbors[n.id]].map((id) => byId[id]).forEach((m) => {
     const s = document.createElement('button'); s.type = 'button'; s.textContent = m.name;
