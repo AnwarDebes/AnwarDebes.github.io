@@ -84,6 +84,7 @@
       <a href="#pixie" class="opt">Pixie</a>
       <a href="#papers" class="opt">Papers</a>
       <a href="#about" class="opt-xs">About</a>
+      <a href="https://www.youtube.com/@anwardebes" class="opt">YouTube</a>
       <a href="cv/">CV</a>
       <button class="theme-toggle" type="button" aria-label="Switch colour theme">Dark</button>
     </nav>
@@ -136,10 +137,10 @@
       <h2 id="long-film-title">The long version, in 49 minutes</h2>
       <p class="lead">All 66 of my repositories in fourteen chapters, with Pixie as the guide. Every number on screen carries the repository, file and line it came from, and in the last chapter the film checks its own sources: 541 of them, hash-chained, rebuilt from fresh clones by one command.</p>
       <div class="film-frame">
-        <a href="https://github.com/AnwarDebes/anwar-debes-film"><img src="assets/video/film-poster.jpg" width="1280" height="720" loading="lazy" alt="Show Its Work: the title card, set in a wall of steel pins, with Pixie in the corner" style="display: block; width: 100%; height: auto"></a>
+        <a href="https://youtu.be/AAQG61EsGcM"><img src="assets/video/film-poster.jpg" width="1280" height="720" loading="lazy" alt="Show Its Work: the title card, set in a wall of steel pins, with Pixie in the corner" style="display: block; width: 100%; height: auto"></a>
       </div>
       <div class="film-links" style="flex-direction: row; flex-wrap: wrap; align-items: center; margin-top: 24px">
-        <a class="cta" href="https://github.com/AnwarDebes/anwar-debes-film">Watch the film</a>
+        <a class="cta" href="https://youtu.be/AAQG61EsGcM">Watch the film on YouTube</a>
         <a href="ledger/">The film's ledger</a>
         <a href="https://github.com/AnwarDebes/anwar-debes-film#chapters">Chapters and code on GitHub</a>
       </div>
@@ -432,6 +433,8 @@
       <p class="lead">I’m open to research collaborations on interpretable and verifiable AI. GitHub is the quickest way to reach me.</p>
       <div class="big-links">
         <a href="https://github.com/AnwarDebes">GitHub</a>
+        <a href="https://www.youtube.com/@anwardebes">YouTube</a>
+        <a href="https://www.tiktok.com/@anwardebes">TikTok</a>
         <a href="https://safemediai.com">SafeMediAI</a>
         <a href="https://github.com/AnwarDebes?tab=repositories">All repositories</a>
       </div>
@@ -449,5 +452,24 @@
 <script type="module" src="assets/js/home.js"></script>
 <script type="module" src="assets/js/pixie.js"></script>
 <script type="module" src="assets/js/reel.js"></script>
+<script type="module">
+// The four project films play muted while they are on screen, like the reel and Pixie above.
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+if (!reduce.matches && 'IntersectionObserver' in window) {
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      const v = e.target;
+      if (e.isIntersecting) { if (v.dataset.userPaused !== '1') { v.muted = true; v.play().catch(() => {}); } }
+      else if (!v.paused) { v.dataset.autoPause = '1'; v.pause(); }
+    }
+  }, {threshold: 0.5});
+  document.querySelectorAll('.lab-film video').forEach((v) => {
+    v.playsInline = true;
+    v.addEventListener('pause', () => { if (v.dataset.autoPause === '1') v.dataset.autoPause = ''; else if (!v.ended) v.dataset.userPaused = '1'; });
+    v.addEventListener('play', () => { v.dataset.userPaused = ''; });
+    io.observe(v);
+  });
+}
+</script>
 </body>
 </html>
