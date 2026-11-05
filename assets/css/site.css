@@ -323,6 +323,30 @@ section.block { position: relative; padding: clamp(72px, 12vh, 140px) 0; }
 .facts dt:first-child { margin-top: 6px; }
 .facts dd { margin: 2px 0 0; }
 
+/* Watch: a compact row of video links */
+section.block.watch { border-top: 1px solid var(--rule); padding: clamp(56px, 9vh, 104px) 0; }
+.watch-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 28px 24px; margin-top: 32px; align-items: start; }
+.watch-item { grid-column: span 4; display: block; color: var(--ink); text-decoration: none; }
+.watch-thumb { position: relative; display: block; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; border: 1px solid var(--rule); background: #12110e; }
+.watch-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.watch-item:hover .watch-thumb img { transform: scale(1.03); }
+.watch-time { position: absolute; right: 10px; bottom: 10px; font-size: 13px; font-weight: 600; color: #fff; background: rgba(0, 0, 0, 0.75); border-radius: 6px; padding: 2px 8px; }
+.watch-title { display: block; margin-top: 14px; font-size: 20px; font-weight: 650; letter-spacing: -0.015em; }
+.watch-item:hover .watch-title { color: var(--glass); }
+.watch-sub { display: block; margin-top: 2px; font-size: 15px; color: var(--graphite); }
+.watch-links { grid-column: span 4; align-self: center; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; font-size: 17px; }
+.watch-links .cta { font-weight: 650; text-decoration: none; background: var(--ink); color: var(--mist); border-radius: 999px; padding: 10px 20px; }
+.watch-links .cta:hover { background: var(--glass); }
+@media (max-width: 980px) {
+  .watch-item { grid-column: span 6; }
+  .watch-links { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 12px 24px; }
+}
+@media (max-width: 560px) {
+  .watch-grid { column-gap: 14px; }
+  .watch-title { font-size: 17px; }
+  .watch-sub { font-size: 14px; }
+}
+
 /* Contact */
 .contact .big-links { display: flex; flex-wrap: wrap; gap: 14px 40px; font-size: clamp(24px, 2.6vw, 36px); font-weight: 600; letter-spacing: -0.02em; margin-top: 28px; }
 

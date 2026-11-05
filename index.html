@@ -11,17 +11,24 @@
 <link rel="canonical" href="https://anwardebes.github.io/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/schibsted-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="stylesheet" href="assets/css/site.css">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Anwar Debes">
+<meta property="og:locale" content="en_US">
 <meta property="og:title" content="Anwar Debes: AI that shows its work">
 <meta property="og:description" content="Interpretable AI, AI safety, reinforcement learning and things that run in your browser. Press the pins, then try to sneak a prompt past my guardrail.">
 <meta property="og:url" content="https://anwardebes.github.io/">
-<meta property="og:image" content="https://anwardebes.github.io/og.png">
+<meta property="og:image" content="https://anwardebes.github.io/og.jpg">
+<meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="A portrait of Anwar Debes made of steel pins">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Anwar Debes: AI that shows its work">
+<meta name="twitter:description" content="Interpretable AI, AI safety, reinforcement learning and things that run in your browser. Press the pins, then try to sneak a prompt past my guardrail.">
+<meta name="twitter:image" content="https://anwardebes.github.io/og.jpg">
+<meta name="twitter:image:alt" content="A portrait of Anwar Debes made of steel pins">
 <script>
   try { var t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t); } catch (e) {}
 </script>
@@ -65,7 +72,7 @@
 </script>
 <script type="importmap">
 { "imports": {
-  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js",
   "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
 } }
 </script>
@@ -119,7 +126,7 @@
       <h2 id="film-title">The short version, in 105 seconds</h2>
       <p class="lead">A portrait in steel pins becomes a map of Norway, a Tsetlin Machine you can argue with, ninety-one registered hypotheses and, in the last frame, a QR code you can scan straight off the screen. Every frame was rendered in a browser tab, like everything else on this site.</p>
       <div class="film-frame reel-frame">
-        <video id="reel-video" controls playsinline preload="none" poster="assets/video/reel-poster.jpg" width="1280" height="720" aria-describedby="reel-desc">
+        <video id="reel-video" controls playsinline preload="none" data-poster="assets/video/reel-poster.jpg" width="1280" height="720" aria-describedby="reel-desc">
           <source src="assets/video/reel-1080p-av1.mp4" type='video/mp4; codecs="av01.0.08M.08, mp4a.40.2"'>
           <source src="assets/video/reel-720p.mp4" type="video/mp4">
           <track kind="captions" src="assets/video/reel-captions.vtt" srclang="en" label="English">
@@ -180,7 +187,7 @@
       <p class="lead">Coding agents usually give you a spinner while they change your code. Pixie, my open-source agent for any model, acts out every step instead, and nothing is edited or run until you say yes. Here is the 54-second film.</p>
       <p>New: Pixie now works inside <a href="https://anwardebes.github.io/glassbox-studio/">Glassbox Studio</a>, a code editor in your browser where a small Tsetlin Machine checks every one of the agent&rsquo;s tool calls before it runs, and shows the clauses that decided. <a href="https://anwardebes.github.io/glassbox-studio/#/demo">Try the demo</a>, no account needed.</p>
       <div class="film-frame">
-        <video id="pixie-video" controls playsinline preload="none" poster="assets/video/pixie-poster.jpg" width="1280" height="720" aria-describedby="pixie-film-desc">
+        <video id="pixie-video" controls playsinline preload="none" data-poster="assets/video/pixie-poster.jpg" width="1280" height="720" aria-describedby="pixie-film-desc">
           <source src="assets/video/pixie-promo-720p.mp4" type="video/mp4">
           <source src="assets/video/pixie-promo-720p.webm" type="video/webm">
         </video>
@@ -220,25 +227,25 @@
       <p class="lead">Each of these runs the actual method in your browser tab, on real data, and each is tested against the project’s own code or an independent checker. Every one comes with a film under a minute long.</p>
       <div class="lab-grid">
         <article class="lab-item" id="lab-veritas">
-          <div class="lab-film"><video controls playsinline preload="none" poster="assets/video/veritas-poster.jpg" width="1280" height="720" aria-label="VERITAS, a 47-second film"><source src="assets/video/veritas-720p.mp4" type="video/mp4"></video></div>
+          <div class="lab-film"><video controls playsinline preload="none" data-poster="assets/video/veritas-poster.jpg" width="1280" height="720" aria-label="VERITAS, a 47-second film"><source src="assets/video/veritas-720p.mp4" type="video/mp4"></video></div>
           <h3><a href="https://anwardebes.github.io/veritas/">VERITAS</a> <span class="lab-tag">formal verification</span></h3>
           <p>A SAT solver in your tab checks a prompt-injection guard against every possible input, finds a bypass, repairs it, and hands you a proof that a standard checker accepts.</p>
           <div class="links"><a class="cta" href="https://anwardebes.github.io/veritas/">Open it live</a><a href="https://github.com/AnwarDebes/veritas">Code and paper</a></div>
         </article>
         <article class="lab-item" id="lab-trace">
-          <div class="lab-film"><video controls playsinline preload="none" poster="assets/video/trace-poster.jpg" width="1280" height="720" aria-label="TRACE, a 47-second film"><source src="assets/video/trace-720p.mp4" type="video/mp4"></video></div>
+          <div class="lab-film"><video controls playsinline preload="none" data-poster="assets/video/trace-poster.jpg" width="1280" height="720" aria-label="TRACE, a 47-second film"><source src="assets/video/trace-720p.mp4" type="video/mp4"></video></div>
           <h3><a href="https://anwardebes.github.io/trace/">TRACE</a> <span class="lab-tag">AI safety</span></h3>
           <p>A simulated agent session where every call looks innocent and the session is not: monitors with a few hundred bytes of memory catch it, and a signed ledger that TRACE’s own Python verifier accepts shows any edit.</p>
           <div class="links"><a class="cta" href="https://anwardebes.github.io/trace/">Open it live</a><a href="https://github.com/AnwarDebes/trace">Code and paper</a></div>
         </article>
         <article class="lab-item" id="lab-candor">
-          <div class="lab-film"><video controls playsinline preload="none" poster="assets/video/candor-poster.jpg" width="1280" height="720" aria-label="CANDOR, a 50-second film"><source src="assets/video/candor-720p.mp4" type="video/mp4"></video></div>
+          <div class="lab-film"><video controls playsinline preload="none" data-poster="assets/video/candor-poster.jpg" width="1280" height="720" aria-label="CANDOR, a 50-second film"><source src="assets/video/candor-720p.mp4" type="video/mp4"></video></div>
           <h3><a href="https://anwardebes.github.io/candor/">CANDOR</a> <span class="lab-tag">interpretability</span></h3>
           <p>A trained network that reads its input through named concepts and certifies every answer. Switch a concept off, plant a backdoor trigger, and watch the certificate respond.</p>
           <div class="links"><a class="cta" href="https://anwardebes.github.io/candor/">Open it live</a><a href="https://github.com/AnwarDebes/candor">Code and paper</a></div>
         </article>
         <article class="lab-item" id="lab-glassbox">
-          <div class="lab-film"><video controls playsinline preload="none" poster="assets/video/glassbox-poster.jpg" width="1280" height="720" aria-label="glassbox-lm, a 50-second film"><source src="assets/video/glassbox-720p.mp4" type="video/mp4"></video></div>
+          <div class="lab-film"><video controls playsinline preload="none" data-poster="assets/video/glassbox-poster.jpg" width="1280" height="720" aria-label="glassbox-lm, a 50-second film"><source src="assets/video/glassbox-720p.mp4" type="video/mp4"></video></div>
           <h3><a href="https://anwardebes.github.io/glassbox-lm/">glassbox-lm</a> <span class="lab-tag">my master’s research</span></h3>
           <p>Ten public-domain books, counted in your tab. Every next word is a sum of clause votes you can read, each traced back to the page it was counted on: the floor a logic-based language model has to beat.</p>
           <div class="links"><a class="cta" href="https://anwardebes.github.io/glassbox-lm/">Open it live</a><a href="https://github.com/AnwarDebes/glassbox-lm">Code and studies</a></div>
@@ -428,6 +435,29 @@
     </div>
   </section>
 
+  <section class="block watch" id="watch" aria-labelledby="watch-title">
+    <div class="wrap">
+      <h2 id="watch-title">Watch</h2>
+      <p class="lead">The long film and the Glassbox Studio demo are on YouTube. Follow along there or on TikTok.</p>
+      <div class="watch-grid">
+        <a class="watch-item" href="https://youtu.be/pefnyZ-oCcM">
+          <span class="watch-thumb"><img src="https://i.ytimg.com/vi/pefnyZ-oCcM/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async"><span class="watch-time">49 min</span></span>
+          <span class="watch-title">Show Its Work</span>
+          <span class="watch-sub">Every repository, in 49 minutes</span>
+        </a>
+        <a class="watch-item" href="https://youtu.be/TJKM7-aPJ-U">
+          <span class="watch-thumb"><img src="https://i.ytimg.com/vi/TJKM7-aPJ-U/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async"></span>
+          <span class="watch-title">Glassbox Studio demo</span>
+          <span class="watch-sub">My coding agent tried rm -rf. A tiny Tsetlin Machine stopped it.</span>
+        </a>
+        <div class="watch-links">
+          <a class="cta" href="https://www.youtube.com/channel/UC8HC5R_z_F6U6IzSGQ5L80w">YouTube channel</a>
+          <a href="https://www.tiktok.com/@anwardebes">TikTok</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="block contact" id="contact" aria-labelledby="contact-title">
     <div class="wrap">
       <h2 id="contact-title">Get in touch</h2>
@@ -453,6 +483,17 @@
 <script type="module" src="assets/js/home.js"></script>
 <script type="module" src="assets/js/pixie.js"></script>
 <script type="module" src="assets/js/reel.js"></script>
+<script type="module">
+// Film posters load as they come near the screen, so the portrait at the top gets the bandwidth first.
+const posters = document.querySelectorAll('video[data-poster]');
+const showPoster = (v) => { v.poster = v.dataset.poster; v.removeAttribute('data-poster'); };
+if ('IntersectionObserver' in window) {
+  const po = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { showPoster(e.target); po.unobserve(e.target); }
+  }, {rootMargin: '300px 0px'});
+  posters.forEach((v) => po.observe(v));
+} else posters.forEach(showPoster);
+</script>
 <script type="module">
 // The four project films play muted while they are on screen, like the reel and Pixie above.
 const reduce = matchMedia('(prefers-reduced-motion: reduce)');
