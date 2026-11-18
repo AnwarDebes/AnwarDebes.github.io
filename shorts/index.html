@@ -174,7 +174,7 @@
       <p class="n">14 · 45 s</p>
       <h2>I retrained my AI guardrail on its own failures. It got worse</h2>
       <p>A solver (z3) checked 8 must-block words on 8 small prompt-injection guards: 54 of 64 checks failed. After 8 rounds of retraining on those failures, 64 of 64 failed and test accuracy fell from 69.2% to 56.5% (mean of 8 seeds). Hard-coded rules on the starting guards instead: 0 of 64 failed.</p><p class="sc">The price: those rules block every prompt containing one of the words, one of them is &quot;write&quot;, and no harmless test prompt contains any of them, so test accuracy cannot show that cost. Tiny guards, one dataset, 8 seeds, draft paper.</p>
-      <div class="links"><a href="https://anwardebes.github.io/veritas/">Live prover</a><a href="https://github.com/AnwarDebes/veritas">Code and draft paper</a></div>
+      <div class="links"><a class="cta" href="https://youtube.com/shorts/r_hD7_9BTlQ">Watch on YouTube</a><a href="https://www.tiktok.com/@anwardebes/video/7709331969154321686">TikTok</a><a href="https://anwardebes.github.io/veritas/">Live prover</a><a href="https://github.com/AnwarDebes/veritas">Code and draft paper</a></div>
     </div>
   </article>
   <article class="sh" id="router">
@@ -183,7 +183,7 @@
       <p class="n">15 · 44 s</p>
       <h2>I traded 1.5 points of accuracy for an LLM router I can edit</h2>
       <p>My LLM router is built on a Tsetlin Machine: 4,000 rules vote on where each question goes, and a question with a low vote margin goes to a human instead. On CLINC150 it routes 94.17% of questions correctly (mean of 5 seeds); logistic regression on the same embeddings gets 95.64%. In my edit test, one added rule lifted play_music from 80% to 90%.</p><p class="sc">The simple baseline is ahead on accuracy, on Banking77 and at spotting off-topic questions. Only 3 of 15 attempted edits improved the test set. Technical report, not peer reviewed; the dataset loaders are not in the repository yet.</p>
-      <div class="links"><a href="https://github.com/AnwarDebes/Clause-Driven-LLM">Code and report</a></div>
+      <div class="links"><a class="cta" href="https://youtube.com/shorts/oRWt2O9Z3Vg">Watch on YouTube</a><a href="https://www.tiktok.com/@anwardebes/video/7709335139196718358">TikTok</a><a href="https://github.com/AnwarDebes/Clause-Driven-LLM">Code and report</a></div>
     </div>
   </article>
   <article class="sh" id="hotcar">
@@ -193,6 +193,15 @@
       <h2>Hot car simulation: cracked windows bought zero extra minutes</h2>
       <p>A physics simulation, not AI: a dark sedan parked in full sun on a 34 °C day, with a toddler inside. With the windows cracked, the cabin peaked less than one degree cooler, and the simulated toddler reached the model&#x27;s heat stroke line (core 40 °C) in the same 1.5 minute time step: zero extra minutes. Across all 168 simulated cases, the median was also zero.</p><p class="sc">The catch: the window effect is an input based on a 2005 study of one real car, and the 16 published checks test the cabin model, not the body model. A simulation, not a safety device. The one option the results mark as guaranteed safe: never leave a child in a parked car.</p>
       <div class="links"><a href="https://github.com/AnwarDebes/HotCarWatch">Code and report</a></div>
+    </div>
+  </article>
+  <article class="sh" id="fusion">
+    <video controls playsinline preload="none" poster="../assets/video/shorts/fusion-poster.jpg" width="720" height="1280" aria-label="I built a test my AI model wins. On real data, the win disappeared, a 44-second video"><source src="../assets/video/shorts/fusion.mp4" type="video/mp4"></video>
+    <div class="tx">
+      <p class="n">17 · 44 s</p>
+      <h2>I built a test my AI model wins. On real data, the win disappeared</h2>
+      <p>Negative result. I built a synthetic test that adding up votes can never get fully right, and my rule-based model won it: 96.8% against 72.7% test accuracy (5 of 5 seeds). On real data, Breast Cancer Wisconsin with 3 views, the win disappeared: 92.8% against 92.5%, a difference of +0.003 (95% CI -0.006 to +0.012, one-sided Wilcoxon p = 0.233); 2 wins, 2 losses, 1 tie.</p><p class="sc">One real dataset, 5 seeds; the draft paper calls the two statistically indistinguishable.</p>
+      <div class="links"><a href="https://github.com/AnwarDebes/Multi-HGTM">Code and draft paper</a></div>
     </div>
   </article>
   <p class="lg-foot">Narration: synthetic voice. <a href="https://www.tiktok.com/@anwardebes">TikTok</a> · <a href="https://www.youtube.com/channel/UC8HC5R_z_F6U6IzSGQ5L80w">YouTube</a></p>
