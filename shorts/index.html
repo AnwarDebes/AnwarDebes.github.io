@@ -156,7 +156,7 @@
       <p class="n">12 · 39 s</p>
       <h2>My AI model flagged a molecule. Then it named the bond to cut</h2>
       <p>A Tsetlin Machine (a model built from readable yes-or-no rules, taught by a GIN neural network) flags a molecule as mutagenic on the TDC AMES test set, then proposes a small graph edit, up to 3, that flips its own prediction: 191 of the first 200 molecules it flagged, 1.30 edits on average. Real data, scaffold split, 729 test molecules, 5 seeds.</p><p class="sc">Two catches kept in: a fingerprint random forest still predicts better (AUROC 0.790 against my 0.685), and in case 1 the proposed edit detached a carbon while my validity check reported it valid. A flipped prediction is not proof the chemistry changed. Draft paper; not drug-safety advice.</p>
-      <div class="links"><a class="cta" href="https://youtube.com/shorts/trIGhATx-x4">Watch on YouTube</a><a href="https://www.tiktok.com/@anwardebes/video/7709326554840501526">TikTok</a><a href="https://github.com/AnwarDebes/graphtm-cbr">Code and case studies</a></div>
+      <div class="links"><a class="cta" href="https://youtube.com/shorts/G6yU0nu_kCo">Watch on YouTube</a><a href="https://www.tiktok.com/@anwardebes/video/7709365624652254486">TikTok</a><a href="https://github.com/AnwarDebes/graphtm-cbr">Code and case studies</a></div>
     </div>
   </article>
   <article class="sh" id="tamper">
@@ -165,7 +165,7 @@
       <p class="n">13 · 40 s</p>
       <h2>I changed one line in a copy of my AI agent&#x27;s log. It got caught</h2>
       <p>In Glassbox Studio a small rule-based guard checks every tool call an AI agent proposes, and each decision goes into a ledger where every entry stores a SHA-256 fingerprint of the entry before it. The page&#x27;s Tamper test edits entry 9 of an 18-entry ledger in a copy, and the check fails at that entry.</p><p class="sc">The catch: the chain is not signed, so whoever can rewrite the whole ledger can recompute every fingerprint and the check would pass. Prototype; the agent&#x27;s words are scripted, the guard decisions and both checks are computed live.</p>
-      <div class="links"><a class="cta" href="https://youtube.com/shorts/rhRYSShvEEI">Watch on YouTube</a><a href="https://www.tiktok.com/@anwardebes/video/7709327130659654934">TikTok</a><a href="https://anwardebes.github.io/glassbox-studio/#/demo">Live demo</a><a href="https://github.com/AnwarDebes/glassbox-studio">Code</a></div>
+      <div class="links"><a class="cta" href="https://youtube.com/shorts/h5UYStL3zGA">Watch on YouTube</a><a href="https://www.tiktok.com/@anwardebes/video/7709364233900674326">TikTok</a><a href="https://anwardebes.github.io/glassbox-studio/#/demo">Live demo</a><a href="https://github.com/AnwarDebes/glassbox-studio">Code</a></div>
     </div>
   </article>
   <article class="sh" id="retrain">
@@ -192,7 +192,7 @@
       <p class="n">16 · 43 s</p>
       <h2>Hot car simulation: cracked windows bought zero extra minutes</h2>
       <p>A physics simulation, not AI: a dark sedan parked in full sun on a 34 °C day, with a toddler inside. With the windows cracked, the cabin peaked less than one degree cooler, and the simulated toddler reached the model&#x27;s heat stroke line (core 40 °C) in the same 1.5 minute time step: zero extra minutes. Across all 168 simulated cases, the median was also zero.</p><p class="sc">The catch: the window effect is an input based on a 2005 study of one real car, and the 16 published checks test the cabin model, not the body model. A simulation, not a safety device. The one option the results mark as guaranteed safe: never leave a child in a parked car.</p>
-      <div class="links"><a href="https://github.com/AnwarDebes/HotCarWatch">Code and report</a></div>
+      <div class="links"><a class="cta" href="https://youtube.com/shorts/Kr2MZy9oGQE">Watch on YouTube</a><a href="https://www.tiktok.com/@anwardebes/video/7709352086923726102">TikTok</a><a href="https://github.com/AnwarDebes/HotCarWatch">Code and report</a></div>
     </div>
   </article>
   <article class="sh" id="fusion">
@@ -219,7 +219,7 @@
       <p class="n">19 · 44 s</p>
       <h2>How many bit flips change an AI&#x27;s answer? Mine counts them</h2>
       <p>RobTM tries every single bit flip, then every pair, then every triple of a Tsetlin Machine&#x27;s 10 yes/no inputs, reports the fewest flips that change its answer, and refuses to answer when that number is below a threshold. The honest result on a synthetic task: one flipped bit changed 276 of 277 correct answers; with the refuse rule at 2 flips it answered 3 of 360 cases, 2 of them right.</p><p class="sc">Training on flipped examples did not help (272 of 273 still fell to one flip). Prototype and draft paper v0.1, synthetic data only, exact search up to 3 flips.</p>
-      <div class="links"><a href="https://github.com/AnwarDebes/RobTM">Code and draft paper</a></div>
+      <div class="links"><a class="cta" href="https://youtube.com/shorts/gVmqZmUVFCs">Watch on YouTube</a><a href="https://www.tiktok.com/@anwardebes/video/7709366163595152662">TikTok</a><a href="https://github.com/AnwarDebes/RobTM">Code and draft paper</a></div>
     </div>
   </article>
   <p class="lg-foot">Narration: synthetic voice. <a href="https://www.tiktok.com/@anwardebes">TikTok</a> · <a href="https://www.youtube.com/channel/UC8HC5R_z_F6U6IzSGQ5L80w">YouTube</a></p>
